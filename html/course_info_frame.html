@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+		<style>
+			body, html {
+				background: #f0f0f0;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				width: 100%;
+			}
+			.course-info {
+				background: #fff;
+				/*margin-top: 10px;*/
+			}
+			.course-img {
+				padding: 10px 0 10px 10px;
+			}
+			.course-img, .course-img img {
+				width: 110px;
+				height: 75px;
+			}
+			.course-text {
+				width: 60%;
+				height: 75px;
+				padding: 10px;
+				position: relative;
+			}
+			.couser-name {
+				font-size: #333;
+				font-size: 16px;
+				font-weight: 600;
+			}
+			.couser-time {
+				font-size: 12px;
+				color: #e05400;
+				position: absolute;
+				bottom: 13px;
+			}
+			.couser-time span {
+				font-size: 12px;
+				color: #888;
+			}
+			.introduce, .cocah-intro {
+				font-size: 12px;
+				color: #666;
+				line-height: 20px;
+				padding: 10px 15px;
+				background: #fff;
+			}
+			.order-btn {
+				background: #02BFAD;
+				height: 50px;
+				width: 80%;
+				border-radius: 3px;
+				line-height: 50px;
+				font-size: 16px;
+				color: #FFFFFF;
+				text-align: center;
+				margin: 0 auto;
+				margin: 10px 0;
+			}
+			.pub-title {
+				width: 100%;
+				background: #ffffff;
+				margin-top: 10px;
+			}
+			.pub-title div {
+				width: 92%;
+				margin: 0 auto;
+				color: #444;
+				font-size: 15px;
+				height: 38px;
+				line-height: 38px;
+				border-bottom: 1px solid #f3f3f3;
+			}
+			.coach-info {
+				background: #fff;
+			}
+			.cocah-img img {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+			}
+			.cocah-img {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				padding: 10px 0 10px 10px;
+			}
+			.coach-info ul {
+				padding: 10px;
+			}
+			.coach-info ul li {
+				font-size: 12px;
+				color: #666;
+				line-height: 25px;
+			}
+			.coach-stars {
+				padding: 0px 12px;
+				background: #fff;
+			}
+			.coach-stars .have {
+				color: #ffa630;
+				font-size: 18px;
+			}
+			.coach-stars .not {
+				color: #ddd;
+				font-size: 18px;
+			}
+			.evel-title {
+				position: relative;
+			}
+			.score-all {
+				position: absolute;
+				right: 15px;
+				top: 10px;
+			}
+			.eval-header img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				margin: 5px 10px;
+			}
+			.eval-header {
+				position: relative;
+			}
+			.eval-time {
+				font-size: 12px;
+				position: absolute;
+				right: 15px;
+				color: #888;
+				line-height: 44px;
+			}
+			.evaluate-all {
+				background: #fff;
+				padding-bottom: 15px;
+			}
+			.evaluate {
+				background: #fff;
+			}
+			.eval-name {
+				color: #555;
+				font-size: 14px;
+				line-height: 48px;
+			}
+			.eval-content {
+				width: 92%;
+				margin: 0 auto;
+				font-size: 12px;
+				color: #666;
+				line-height: 24px;
+				padding: 5px 0;
+				border-bottom: 1px solid #F3F3F3;
+			}
+			.look-all {
+				width: 85%;
+				height: 48px;
+				border: 1px solid #EEEEEE;
+				border-radius: 2px;
+				background: #FbFbFb;
+				text-align: center;
+				line-height: 48px;
+				color: #02BFAD;
+				font-size: 15px;
+				margin: 0 auto;
+			}
+			.look-con {
+				background: #fff;
+				padding-top: 15px;
+				padding-bottom: 15px;
+			}
+			#footer {
+				background: red;
+			}
+			.rest-num {
+				font-size: 12px;
+				color: #e05400;
+				position: absolute;
+				bottom: 30px;
+			}
+			.rest-num span {
+				font-size: 12px;
+				color: #969696;
+				font-size: 12px;
+				color: #888;
+			}
+			.order-btn {
+				width: 60px;
+				height: 60px;
+				background: #f44b53;
+				border-radius: 50%;
+				line-height: 60px;
+				text-align: center;
+				font-size: 15px;
+				color: #fff;
+				position: fixed;
+				top: 5px;
+				right: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="course-info clearfix">
+			<div class="course-img fl">
+				<img src="" />
+			</div>
+			<div class="course-text fl">
+				<p class="couser-name">
+					<!--倒车入库-->
+				</p>
+				<p class="rest-num">
+					<span>剩余名额:</span><a></a>
+				</p>
+				<p class="couser-time">
+					<span>开课:</span>
+					<!--2017-03-09-->
+				</p>
+			</div>
+			<!--<div class="order-btn">
+			立即预约
+			</div>-->
+		</div>
+		<div class="pub-title">
+			<div>
+				课程简介
+			</div>
+		</div>
+		<div class="introduce">
+			<!--简介：倒车入库是2013年后考取小型汽车驾照必须进行的一个项目。考察驾驶人在场地操作汽车的能力。
+			倒车入库是驾驶员考试中的一个考核点。即在运动中操纵车辆从两侧正确倒入车库。-->
+		</div>
+		<div class="pub-title">
+			<div>
+				教练信息
+			</div>
+		</div>
+		<div class="coach-info clearfix">
+			<div class="cocah-img fl">
+				<img src="" />
+			</div>
+			<ul class="fl">
+				<li id="nickname">
+					<!--姓名：王晓晓-->
+				</li>
+				<li id="sex">
+					<!--性别：女-->
+				</li>
+				<li id="age">
+					<!--年龄：23-->
+				</li>
+			</ul>
+			<ul class="fl">
+				<li id="tyear">
+					<!--教龄：5年-->
+				</li>
+				<li id="dyear">
+					<!--驾龄：10年-->
+				</li>
+				<li id="tel">
+					<!--手机号：17834773829-->
+				</li>
+			</ul>
+		</div>
+		<!--<p class="coach-stars">
+		<i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i>
+		</p>-->
+		<div class="pub-title">
+			<div>
+				教练简介
+			</div>
+		</div>
+		<div class="cocah-intro">
+			<!--简介：跟着我问题不大的！只要你付出了努力！-->
+		</div>
+		<div class="look-con">
+			<div class="look-all">
+				查看教练评价
+			</div>
+		</div>
+		<div class="order-btn" onclick="insertCourse();">
+			预约
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../script/store.min.js"></script>
+	<script type="text/javascript" src="../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			refreshInfo();
+			checkCourse();
+			//全部评论
+		};
+		function insertCourse() {
+			$restNumdown = $('.rest-num a').html();
+			var a = $restNumdown - 0;
+			if ($('.order-btn').html() == '已预约') {
+				Toast('你已经选过这门课了。', 600);
+			} else if (a == '0') {
+				Toast('该课程已无预约名额。', 600);
+			} else {
+				var courseId = api.pageParam.courseId;
+				var loginUserId = $api.getStorage('loginUserId');
+				$.ajax({
+					url : IP + '/common/insertStuCourse.do',
+					method : 'post',
+					dataType : 'json',
+					data : {
+						courseId : courseId,
+						studentId : loginUserId
+					},
+					success : function(data) {
+						if (data.flag == 1) {
+							Toast('选课成功', 500);
+							$('.order-btn').css('background', '#abdad5');
+							$('.order-btn').html('已预约');
+							a--;
+							$('.rest-num a').html(a);
+						}
+					}
+				})
+			}
+		}
+
+		function checkCourse() {
+			var courseId = api.pageParam.courseId;
+			var loginUserId = $api.getStorage('loginUserId');
+			$.ajax({
+				url : IP + '/common/selectStuCourse.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					courseId : courseId,
+					studentId : loginUserId
+				},
+				success : function(data) {
+					//				alert(a)
+					if (data.total >= 1) {
+						$('.order-btn').css('background', '#abdad5');
+						$('.order-btn').html('已预约');
+					}
+					//					 else if (a == '0') {
+					//						$('.order-btn').css('background', '#abdad5');
+					//						$('.order-btn').html('已约满');
+					//					} else {
+					//						$('.order-btn').css('background', '#f44b53');
+					//						$('.order-btn').html('预约');
+					//					}
+				}
+			})
+		}
+
+		function refreshInfo() {
+			var courseId = api.pageParam.courseId;
+			//		显示课程信息
+			var $courseImg = $('.course-img img');
+			var $courseName = $('.couser-name');
+			var $couserTime = $('.couser-time');
+			var $courseIntro = $('.introduce');
+			var $restNum = $('.rest-num a');
+			//		显示教练信息
+			var $cocahImg = $('.cocah-img img');
+			var $nickname = $('#nickname');
+			var $sex = $('#sex');
+			var $age = $('#age');
+			var $tyear = $('#tyear');
+			var $dyear = $('#dyear');
+			var $tel = $('#tel');
+			var $cocahIntro = $('.cocah-intro');
+			var $scoreAll = $('.score-all');
+			//			评论
+			var $totalcom = $('.totalcom');
+			var $evaluateAll = $('.evaluate-all');
+			$evaluateAll.empty();
+			$.ajax({
+				url : IP + '/common/selectCourse.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					id : courseId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						var ctime = data.objectList[0].courseTime.substring(0, 10);
+						$courseImg.attr('src', data.objectList[0].courseUrl);
+						$courseName.html(data.objectList[0].courseName);
+						$couserTime.html('	<span>开课:</span> ' + ctime);
+						var restNum = data.objectList[0].maxNum - data.objectList[0].readyNum;
+						if (restNum > 0) {
+							$restNum.html(restNum);
+						} else if (restNum == 0) {
+							$restNum.html(restNum);
+						}
+						$courseIntro.html(data.objectList[0].introduction);
+						var coachId = data.objectList[0].coachId;
+						//						alert(coachId)
+						if (coachId) {
+							//						alert(coachId)
+							$('.look-con').click(function() {
+								api.openWin({
+									name : 'coach_comment',
+									url : 'coach_comment.html',
+									bounces : false,
+									pageParam : {
+										coachId : coachId
+									}
+								});
+							})
+							//						教练信息
+							$.ajax({
+								url : IP + '/personalcenter/coachInfo.do',
+								method : 'post',
+								dataType : 'json',
+								data : {
+									id : coachId
+								},
+								success : function(data) {
+									if (data.flag == 1) {
+										$cocahImg.attr('src', data.objectList[0].imageUrl);
+										$nickname.html('姓名：' + data.objectList[0].nickName);
+										if (data.objectList[0].sex == 0) {
+											$sex.html('性别：' + '男');
+										} else if (data.objectList[0].sex == 1) {
+											$sex.html('性别：' + '女');
+										}
+										$age.html('年龄：' + data.objectList[0].age);
+										$tel.html('电话：' + data.objectList[0].telephone);
+										//教龄
+										$tyear.html('教龄：' + ages(data.objectList[0].tyear.substring(0, 10)) + '年');
+										//驾龄
+										$dyear.html('驾龄：' + ages(data.objectList[0].dyear.substring(0, 10)) + '年');
+										$cocahIntro.html(data.objectList[0].introduce);
+										$scoreAll.html('综合评分：' + data.objectList[0].mark);
+									}
+								}
+							});
+							//							选课
+						}
+					}
+				}
+			});
+		}
+	</script>
+</html>

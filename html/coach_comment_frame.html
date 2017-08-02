@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/public.css"/>
+		<style>
+			body, html {
+				width: 100%;
+				height: 100%;
+			}
+			.pub-title {
+				width: 100%;
+				background: #ffffff;
+				margin-top: 10px;
+			}
+			.pub-title div {
+				width: 92%;
+				margin: 0 auto;
+				color: #444;
+				font-size: 15px;
+				height: 38px;
+				line-height: 38px;
+				border-bottom: 1px solid #f3f3f3;
+			}
+			.pub-title div  span {
+				display: inline-block;
+				color: #333;
+				padding-right: 10px;
+			}
+			.com-btn {
+				font-size: 14px;
+				border-radius: 50%;
+				text-align: center;
+				width: 60px;
+				height: 60px;
+				background: #02BFAD;
+				line-height: 60px;
+				color: #fff;
+				display: block;
+				position: fixed;
+				bottom: 50px;
+				right: 30px;
+			}
+			.coach-info ul li {
+				font-size: 12px;
+				color: #666;
+				line-height: 25px;
+			}
+			.coach-stars {
+				padding: 0px 12px;
+				background: #fff;
+			}
+			.coach-stars .have {
+				color: #ffa630;
+				font-size: 18px;
+			}
+			.coach-stars .not {
+				color: #ddd;
+				font-size: 18px;
+			}
+			.evel-title {
+				position: relative;
+			}
+			.eval-header img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				margin: 5px 10px;
+			}
+			.eval-header {
+				position: relative;
+			}
+			.eval-time {
+				font-size: 12px;
+				position: absolute;
+				right: 15px;
+				color: #888;
+				line-height: 44px;
+			}
+			.evaluate-all {
+				background: #fff;
+				padding-bottom: 15px;
+			}
+			.evaluate {
+				background: #fff;
+			}
+			.eval-name {
+				color: #555;
+				font-size: 14px;
+				line-height: 48px;
+			}
+			.eval-content {
+				width: 92%;
+				margin: 0 auto;
+				font-size: 12px;
+				color: #666;
+				line-height: 24px;
+				padding: 5px 0;
+				border-bottom: 1px solid #F3F3F3;
+			}
+			.com-win {
+				width: 100%;
+				height: 400px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: #fff;
+				z-index: 100;
+				padding: 0px 15px;
+			}
+			.com-win-bg {
+				width: 100%;
+				height: 100%;
+				z-index: 99;
+				position: fixed;
+				top: 0;
+				/*	background: red;*/
+				background: #f1f1f1;
+				display: none;
+			}
+			.header {
+				height: 60px;
+				line-height: 60px;
+				font-size: 18px;
+				background: #fff;
+				border-bottom: 1px solid #eee;
+				color: #333;
+			}
+			.my-coach-stars {
+				display: inline-block;
+			}
+			.my-coach-stars i {
+				color: #ddd;
+				font-size: 26px;
+				margin: 0 2px;
+			}
+			.content {
+				padding: 15px 0;
+				color: #aaa;
+			}
+			.content textarea {
+				color: #333;
+				height: 100px;
+				width: 90%;
+				font-size: 16px;
+				line-height: 26px;
+			}
+			.btns {
+				position: absolute;
+				right: 35px;
+				bottom: -30px;
+			}
+			.btns span {
+				display: inline-block;
+				height: 60px;
+				width: 60px;
+				border-radius: 50%;
+				margin: 0 10px;
+				text-align: center;
+				font-size: 15px;
+				color: #fff;
+				line-height: 60px;
+			}
+			.btns .cancle-btn {
+				background: #ec5151;
+			}
+			.confirm-btn {
+				background: #02BFAD;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pub-title evel-title">
+			<div class="clearfix">
+				<span class="totalcom fl"></span>
+				<span class="score-all fr">综合评分 <a></a </span>
+			</div>
+		</div>
+		<ul class="evaluate-all">
+			<!--<li class="evaluate">
+			<div class="eval-header">
+			<img class="eval-img" src="../image/community/pic.png" /><span class="eval-name">雪二哥哥哥</span><span class="eval-time">02月12日</span><span></span>
+			</div>
+			<p class="coach-stars">
+			<i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i>
+			</p>
+			<div class="eval-content">
+			教练很nice,讲解很耐心。简介：倒车入库是2013年后考取小型汽车驾照必须进行的一个项目。考察驾驶人在场地操作汽车的能力。
+			</div>
+			</li>-->
+		</ul>
+		<span class="com-btn">评价</span>
+		<div  class="com-win-bg">
+			<div class="com-win">
+				<div class="header">
+					评分
+					<p class="my-coach-stars">
+						<i class="iconfont">&#xe659;</i>
+						<i class="iconfont">&#xe659;</i>
+						<i class="iconfont">&#xe659;</i>
+						<i class="iconfont">&#xe659;</i>
+						<i class="iconfont">&#xe659;</i>
+					</p>
+				</div>
+				<div class="content" >
+					<textarea placeholder = "说点你和教练的故事吧~"></textarea>
+				</div>
+				<div class="btns">
+					<span class="cancle-btn">取消</span>
+					<span class="confirm-btn">确认</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/public.js"></script>
+	<!--<script type="text/javascript" src="../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			refreshComment();
+			interaction();
+		};
+		//		刷新文档列表
+		function refreshComment() {
+			var coachId = api.pageParam.coachId;
+			//			var loginUserId = store.get('loginUserId');
+			var loginUserId = $api.getStorage('loginUserId');
+			//			var comStars = store.get('comStars');
+			var loginUserId = $api.getStorage('comStars');
+			//			alert(coachId)
+			//			评论
+			var $totalcom = $('.totalcom');
+			var $evaluateAll = $('.evaluate-all');
+			var $scoreAll = $('.score-all a');
+			$evaluateAll.empty();
+			//平均分
+			$.ajax({
+				url : IP + '/personalcenter/selectCoachStar.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					coachId : coachId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						$scoreAll.html(data.objectList);
+					}
+				}
+			});
+			//							评论列表
+			$.ajax({
+				url : IP + '/personalcenter/coachComment.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					coachId : coachId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						$totalcom.html('教练评价（' + data.total + '）');
+						$('.look-all').html('查看全部' + data.total + '条评价');
+						for (var i = 0; i < data.objectList.length; i++) {
+							var $list = $('<li tapmode></li>').addClass('evaluate').prependTo($evaluateAll);
+							var $evelHeader = $('<div></div>').addClass('eval-header').appendTo($list);
+							var $evelimg = $('<img>').addClass('eval-img').attr('src', data.objectList[i].commentUrl).appendTo($evelHeader);
+							var $evelname = $('<span></span>').addClass('eval-name').html(data.objectList[i].commentName).appendTo($evelHeader);
+							var $eveltime = $('<span></span>').addClass('eval-time').html(data.objectList[i].commentTime).appendTo($evelHeader);
+							var $coachStars = $('<p></p>').addClass('coach-stars').appendTo($list);
+							for (var j = 0; j < data.objectList[i].commentStar; j++) {
+								var $star = $('<i></i>').html('&#xe659;').addClass('iconfont have').appendTo($coachStars);
+							}
+							for (var j = data.objectList[i].commentStar + 1; j <= 5; j++) {
+								var $star = $('<i></i>').html('&#xe659;').addClass('iconfont not').appendTo($coachStars);
+							}
+							var $evalContent = $('<div></div>').addClass('eval-content').html(data.objectList[i].commentContent).appendTo($list);
+						}
+					}
+				}
+			});
+		}
+
+		//交互设计
+		function interaction() {
+			var coachId = api.pageParam.coachId;
+			//			var loginUserId = store.get('loginUserId');
+			var loginUserId = $api.getStorage('loginUserId');
+			function comWinHide() {
+				$('.com-win-bg').hide();
+			};
+			$('.com-btn').click(function() {
+				$('.com-win-bg').show();
+			});
+			$('.cancle-btn').click(function() {
+				comWinHide();
+			});
+			$('.my-coach-stars i').each(function(i) {
+				(function(num) {
+					$('.my-coach-stars i')[num].addEventListener('click', function() {
+						comStars = num + 1;
+						//						store.set('comStars', comStars);
+						$api.setStorage('comStars', comStars);
+						for (var j = 0; j < num + 1; j++) {
+							$('.my-coach-stars i')[j].style.color = '#ffa630';
+						}
+						for (var j = num + 1; j < 5; j++) {
+							$('.my-coach-stars i')[j].style.color = '#dddddd';
+						}
+					});
+				})(i);
+			})
+			$('.confirm-btn').click(function() {
+				var commentContent = $('.content textarea').val();
+				//				alert(coachId + ',' + loginUserId + ',' + comStars + ',' + commentContent);
+				$.ajax({
+					url : IP + '/personalcenter/insertCoachComment.do',
+					method : 'post',
+					dataType : 'json',
+					data : {
+						coachId : coachId,
+						commentId : loginUserId,
+						commentStar : comStars,
+						commentContent : commentContent,
+					},
+					success : function(data) {
+						if (data.flag == 1) {
+							//							alert('ok')
+							//							store.set('comStars', 0);
+							$api.setStorage('comStars', 0);
+							Toast('评价成功', 500);
+							setTimeout(function() {
+								$('.com-win-bg').hide();
+							}, 500);
+							refreshComment();
+						}
+					}
+				})
+			})
+		};
+	</script>
+</html>

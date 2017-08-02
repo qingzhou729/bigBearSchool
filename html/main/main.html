@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>Hello APP</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/public.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+		<style>
+			html, body {
+				height: 100%;
+			}
+			body {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-orient: vertical;
+				-webkit-flex-flow: column;
+				flex-flow: column;
+			}
+			section {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+			}
+			footer {
+				width: 100%;
+				height: 60px;
+				background-color: rgb(250, 250, 250);
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				position: fixed;
+				bottom: 0;
+			}
+			footer > section {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				width: 100%;
+				text-align: center;
+				padding: 6px 0 6px 0;
+			}
+			footer > section > .iconfont {
+				font-size: 24px;
+				/* color: rgb(165, 165, 165);*/
+			}
+			footer > section > div {
+				font-size: 12px;
+				/* color: rgb(165, 165, 165);*/
+			}
+			footer  .Active .iconfont {
+				color: #43cabd;
+				text-align: center;
+			}
+			footer .Active div {
+				color: #43cabd;
+				text-align: center;
+			}
+			.header-item {
+				display: none;
+			}
+			.header-item-act {
+				display: block;
+			}
+			header > div:nth-child(1) {
+				position: relative;
+				background-color: rgb(67,202,189);
+				height: 50px;
+			}
+			header > div:nth-child(1) div {
+				color: #FFFFFF;
+				font-size: 20px;
+				text-align: center;
+				line-height: 50px;
+			}
+			header > div:nth-child(2) {
+				position: relative;
+				height: 50px;
+				background-color: rgb(67,202,189);
+			}
+			header > div:nth-child(2) div {
+				color: #FFFFFF;
+				font-size: 20px;
+				text-align: center;
+				line-height: 50px;
+			}
+			header > div:nth-child(3) {
+				position: relative;
+				height: 50px;
+				background-color: rgb(67,202,189);
+			}
+			header > div:nth-child(3) div {
+				color: #FFFFFF;
+				font-size: 20px;
+				text-align: center;
+				line-height: 50px;
+			}
+			header > div:nth-child(4) {
+				position: relative;
+				height: 50px;
+				background-color: rgb(67,202,189);
+			}
+			header > div:nth-child(4) div {
+				color: #FFFFFF;
+				font-size: 20px;
+				text-align: center;
+				line-height: 50px;
+			}
+			header > div:nth-child(5) {
+				position: relative;
+				height: 50px;
+				background-color: rgb(67,202,189);
+			}
+			header > div:nth-child(5) div {
+				color: #FFFFFF;
+				font-size: 20px;
+				text-align: center;
+				line-height: 50px;
+			}
+			#community .message-btn {
+				color: #fff;
+				line-height: 50px;
+				position: absolute;
+				font-size: 24px;
+				right: 20px;
+				z-index: 100;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="header-item header-item-act" id="home">
+				<div>
+					驾考指南
+				</div>
+			</div>
+			<div class="header-item" id="newsList">
+				<div>
+					热点
+				</div>
+			</div>
+			<div class="header-item" id="community">
+				<div>
+					车友圈 <i class="iconfont message-btn">&#xe614;</i>
+				</div>
+			</div>
+			<div class="header-item" id="messages">
+				<div>
+					消息中心
+				</div>
+			</div>
+			<div class="header-item" id="my">
+				<div></div>
+			</div>
+		</header>
+		<section></section>
+		<footer>
+			<section class="Active" tapmode="active" onclick="fnSwitchFrame(0);">
+				<i class="iconfont">&#xe679;</i>
+				<div>
+					驾考
+				</div>
+			</section>
+			<section tapmode="active" onclick="fnSwitchFrame(1);">
+				<i class="iconfont">&#xe606;</i>
+				<div>
+					热点
+				</div>
+			</section>
+			<section tapmode="active" onclick="fnSwitchFrame(2);">
+				<i class="iconfont">&#xe62b;</i>
+				<div>
+					发现
+				</div>
+			</section>
+			<section tapmode="active" onclick="fnSwitchFrame(3);">
+				<i class="iconfont">&#xe609;</i>
+				<div>
+					我的
+				</div>
+			</section>
+		</footer>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		$('.message-btn').click(function() {
+			api.openWin({
+				name : 'post_message',
+				url : '../../html/messages/post_message.html',
+				bounces : false,
+				pageParam : {
+					key : ''
+				}
+			});
+		})
+		var frameNames = ['home', 'newsList', 'community', 'my'];
+		var headerH;
+		var footerH;
+		function fnSwitchFrame(index_) {
+			// for header switch
+			var header = $api.dom('header');
+			var headerItems = $api.domAll(header, '.header-item');
+			for (var i = 0; i < headerItems.length; i++) {
+				$api.removeCls(headerItems[i], 'header-item-act');
+			};
+			$api.addCls(headerItems[index_], 'header-item-act');
+			// for footer sections
+			var footer = $api.dom('footer');
+			var footerSections = $api.domAll(footer, 'section');
+			for (var i = 0; i < footerSections.length; i++) {
+				$api.removeCls(footerSections[i], 'Active');
+			}
+			$api.addCls(footerSections[index_], 'Active');
+			// for frame switch
+			for (var i = 0; i < frameNames.length; i++) {
+				api.setFrameAttr({
+					name : frameNames[i] + '_frame',
+					hidden : true
+				});
+			};
+			var frameHeaderH = headerH;
+			if (index_ == 3) {
+				frameHeaderH = headerH - 49;
+			}
+			api.openFrame({
+				name : frameNames[index_] + '_frame',
+				url : frameNames[index_] + '_frame.html',
+				bounces : false,
+				//				reload : true,
+				rect : {
+					x : 0,
+					y : frameHeaderH,
+					w : 'auto',
+					h : api.frameHeight - frameHeaderH - footerH
+				},
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false
+			});
+		}
+
+		apiready = function() {
+			api.addEventListener({
+				name : 'keyback'
+			}, function(ret, err) {
+				api.closeWidget();
+			});
+			var home = $api.byId('home');
+			var community = $api.byId('community');
+			var find = $api.byId('messages');
+			var my = $api.byId('my');
+			var newsList = $api.byId('newsList');
+			//固定的兼容IOS的处理
+			$api.fixIos7Bar(home);
+			$api.fixIos7Bar(community);
+			$api.fixIos7Bar(messages);
+			$api.fixIos7Bar(my);
+			$api.fixIos7Bar(newsList);
+			headerH = $api.offset(home).h;
+			var footer = $api.dom('footer');
+			footerH = $api.offset(footer).h;
+			api.openFrame({
+				name : 'home_frame',
+				url : 'home_frame.html',
+				bounces : false,
+				rect : {
+					x : 0,
+					y : headerH,
+					w : 'auto',
+					h : api.frameHeight - headerH - footerH
+				},
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false
+			});
+		};
+	</script>
+</html>

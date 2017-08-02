@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/public.css"/>
+		<style>
+			html, body {
+				width: 100%;
+				background-color: #fff;
+			}
+			input {
+				outline: none;
+				width: 85%;
+				height: 50px;
+				font-size: 12px;
+				color: #333;
+			}
+			input::-webkit-input-placeholder {
+				color: #aaa;
+				font-size: 12px;
+			}
+			form {
+				margin-top: 50px;
+			}
+			form div {
+				width: 85%;
+				height: 40px;
+				margin: 0 auto;
+				border-bottom: 1px solid #eee;
+				margin-bottom: 20px;
+				line-height: 40px;
+			}
+			.login-title {
+				font-weight: 600;
+				font-size: 24px;
+				padding: 10px 0;
+				text-align: left;
+				color: #3c3c3c;
+				width: 85%;
+				text-align: left;
+				margin: 0 auto;
+				margin-top: 15px;
+			}
+			.login-brief {
+				color: #aaa;
+				width: 85%;
+				text-align: left;
+				margin: 0 auto;
+				font-size: 12px;
+			}
+			.create-btn {
+				width: 85%;
+				height: 45px;
+				line-height: 47px;
+				text-align: center;
+				margin: 0 auto;
+				border-radius: 2px;
+				font-size: 16px;
+			}
+			.create-btn {
+				background: #43CABD;
+				margin-bottom: 10px;
+				color: #fff;
+			}
+			.agree-con {
+				font-size: 12px;
+				color: #aaa;
+				text-align: center;
+				line-height: 30px;
+				margin-top: 80px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="login-card">
+			<div class="login-title">
+				欢迎来到大熊世界
+			</div>
+			<div class="login-brief">
+				让老司机带你飞
+			</div>
+			<form name="registerForm">
+				<div>
+					<input type="text" placeholder="请输入昵称" id="nickn"/>
+				</div>
+				<div class="registerForm">
+					<input type="text" placeholder="请输入11位手机号" id="telep"/>
+				</div>
+				<div>
+					<input type="password" placeholder="请输入6-12位密码" id="passwd"/>
+				</div>
+				<div>
+					<input type="password" placeholder="再次输入6-12位密码" id="passwd2"/>
+				</div>
+			</form>
+			<div class="agree-con">
+				注册账户，即表明你阅读并同意<a href="#">《大熊驾照用户协议》</a>条款
+			</div>
+			<div class="create-btn" tapmode onclick="fnRegister();">
+				注册
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../script/public.js"></script>
+	<script type="text/javascript">
+		$('#passwd').blur(function() {
+			if ($('#passwd').val().length < 6 || $('#passwd').val().length > 12) {
+				Toast('密码必须是6至12位', 1000);
+			}
+		});
+		$('#passwd2').blur(function() {
+			if ($('#passwd').val() !== $('#passwd2').val()) {
+				Toast('两次密码输入不一样', 1000);
+			}
+		});
+		function fnRegister() {
+			var $telep = $('#telep').val();
+			var $nickn = $('#nickn').val();
+			var $passwd = $('#passwd').val();
+			$.ajax({
+				url : IP + '/common/checkAccount.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					telephone : $telep,
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						Toast('该手机号已被注册，请直接登录', 1000);
+					} else {
+						$.ajax({
+							url : IP + '/common/registerStudent.do',
+							method : 'post',
+							dataType : 'json',
+							data : {
+								telephone : $telep,
+								nickName : $nickn,
+								password : $passwd,
+							},
+							success : function(data) {
+								if (data.flag == 1) {
+									Toast('注册成功', 1000);
+									setTimeout(function() {
+										api.openWin({
+											name : 'login',
+											url : 'login.html',
+											bounces : false,
+											slidBackEnabled : false,
+											pageParam : {
+												key : ''
+											},
+											animation : {
+												type : 'none'
+											}
+										});
+									}, 1000);
+								} else {
+									Toast('注册失败', 1000);
+								}
+							}
+						});
+					}
+				}
+			});
+			function fnOpenMoreFrame() {
+				api.openFrame({
+					name : 'login_more_frame',
+					url : 'login_more_frame.html',
+					bounces : true,
+					rect : {
+						x : 0,
+						y : 0,
+						w : 'auto',
+						h : 'auto'
+					}
+				});
+			}
+
+		}
+
+		apiready = function() {
+		};
+	</script>
+</html>

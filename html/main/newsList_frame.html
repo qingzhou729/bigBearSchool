@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			html, body {
+				height: 100%;
+				background-color: #f0f0f0;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.h200 {
+				height: 200px;
+			}
+			.col {
+				font-size: 18px;
+			}
+			.h10 {
+				height: 10px;
+			}
+			.news-items li {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				width: 100%;
+				/*	border-bottom: 1px solid #EEEEEE;*/
+				padding: 12px;
+				height: 100px;
+				background: #fff;
+				margin-bottom: 1px;
+				position: relative;
+			}
+			.news-pic {
+				margin-right: 10px;
+				border: 1px solid #eee;
+			}
+			.news-pic, .news-pic img {
+				width: 110px;
+				height: 75px;
+				display: block;
+			}
+			.news-title {
+				color: #333;
+				font-size: 16px;
+			}
+			.news-symbol .news-time {
+				font-size: 13px;
+				color: #aaa;
+			}
+			.news-res {
+				display: inline-block;
+				padding: 0 4px;
+				height: 14px;
+				line-height: 16px;
+				font-size: 10px;
+				border-radius: 5px;
+				border: 1px solid #43CABD;
+				color: #43CABD;
+				margin-left: 10px;
+				background: #fff;
+				position: absolute;
+				bottom: 0px;
+				right: 15px;
+			}
+			.news-info {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				width: 60%;
+				padding: 0 12px 0 0;
+			}
+			.news-info {
+				position: absolute;
+				height: 80px;
+				left: 134px;
+				top: 12px;
+			}
+			.news-time, .news-res {
+				padding: 0 2px;
+			}
+			.news-symbol {
+				width: 100%;
+				position: absolute;
+				left: 0px;
+				bottom: 3px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="h200"></div>
+		<div class="h10"></div>
+		<ul class="news-items">
+			<!--<li class="news-item clearfix" onclick="fnOpenNewsWin();">
+			<div class="news-pic fl">
+			<img src="../../image/news/news.png" />
+			</div>
+			<div class="news-info fl">
+			<p class="news-title">
+			驾校培训“先学后付”模式未受追捧,驾校培训
+			</p>
+			<div class="news-symbol clearfix">
+			<span class="news-time fl">10分钟前 clearfix clearfix</span><span class="news-res fl">百度新闻</span>
+			</div>
+			</div>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		function fnOpenNewsWin(shopId) {
+			api.openWin({
+				name : 'shop',
+				url : '../../html/news_info.html',
+				bounces : false,
+				pageParam : {
+					"shopId" : shopId
+				}
+			});
+		};
+		function fnOpenSearchResultWin(text_) {
+			api.openWin({
+				name : 'search_result',
+				url : 'search_result.html',
+				bounces : false,
+				pageParam : {
+					text : text_
+				}
+			});
+		}
+
+		function setTabIndex(index_) {
+			var tabbar = $api.byId('tabbar');
+			var tabbody = $api.byId('tabbody');
+			var tabbarCols = $api.domAll(tabbar, '.col');
+			var tabbarIndicators = $api.domAll(tabbar, '.indicator');
+			var tabbodyLists = $api.domAll(tabbody, '.home-tuan-list');
+			// for tarbar
+			for (var i = 0; i < tabbarCols.length; i++) {
+				$api.removeCls(tabbarCols[i], 'col-act');
+			};
+			$api.addCls(tabbarCols[index_], 'col-act');
+			// for tabbar indicator
+			for (var i = 0; i < tabbarIndicators.length; i++) {
+				$api.removeCls(tabbarIndicators[i], 'indicator-act');
+			};
+			$api.addCls(tabbarIndicators[index_], 'indicator-act');
+			// for tabbar list
+			for (var i = 0; i < tabbodyLists.length; i++) {
+				$api.removeCls(tabbodyLists[i], 'home-tuan-list-act');
+			};
+			$api.addCls(tabbodyLists[index_], 'home-tuan-list-act');
+		}
+
+		apiready = function() {
+			$.ajax({
+				url : IP + '/homepage/picList.do',
+				method : 'post',
+				dataType : 'json',
+				success : function(data) {
+					if (data.flag == 1) {
+						var array = [];
+						for (var i = 0; i < data.objectList.length; i++) {
+							array.push($api.trimAll(imgUrl + data.objectList[i].imageUrl));
+							//							alert(array)
+						}
+						//		轮播图
+						var UIScrollPicture = api.require('UIScrollPicture');
+						UIScrollPicture.open({
+							rect : {
+								x : 0,
+								y : 0,
+								w : api.winWidth,
+								h : 200
+							},
+							data : {
+								paths : array,
+							},
+							styles : {
+								caption : {
+									height : 35,
+									color : '#E0FFFF',
+									size : 13,
+									bgColor : '#696969',
+									position : 'bottom'
+								},
+								indicator : {
+									align : 'center',
+									color : '#ddd',
+									activeColor : '#43cabd'
+								}
+							},
+							placeholderImg : 'widget://image/community/banner-1.png',
+							contentMode : 'scaleToFill',
+							interval : 3,
+							fixedOn : api.frameName,
+							loop : true,
+							fixed : false
+						}, function(ret, err) {
+							if (ret.status) {
+								if (ret.eventType == 'click') {
+									var url = data.objectList[ret.index].picUrl;
+									api.openWin({
+										name : 'news_info',
+										url : '../../html/news_info.html',
+										bounces : false,
+										pageParam : {
+											"newsId" : url
+										}
+									});
+								}
+							}
+						});
+					}
+				}
+			});
+			var $newsItems = $('.news-items');
+			$newsItems.empty();
+			$.ajax({
+				url : IP + '/homepage/newsList.do',
+				method : 'post',
+				dataType : 'json',
+				success : function(data) {
+					for (var i = 0; i < data.objectList.length; i++) {
+						var imgUrl = data.objectList[i].picList[0].url;
+						var $list = $('<li tapmode></li>').addClass('news-item').prependTo($newsItems);
+						//						alert(data.objectList[i].id)
+						$list.attr("id", data.objectList[i].id);
+						var $newsPic = $('<div></div>').addClass('news-pic').appendTo($list);
+						var $img = $('<img>').attr('src', imgUrl).appendTo($newsPic);
+						//						alert(imgUrl)
+						var $newsInfo = $('<div></div>').addClass('news-info').appendTo($list);
+						var $newsTitle = $('<p></p>').addClass('news-title').html(data.objectList[i].newsName).appendTo($newsInfo);
+						var $newsSymbol = $('<div></div>').addClass('news-symbol').appendTo($newsInfo);
+						var $coachTime = $('<span></span>').addClass('news-time').html(data.objectList[i].newsTime).appendTo($newsSymbol);
+						var $newsRes = $('<span></span>').addClass('news-res').html(data.objectList[i].author).appendTo($newsSymbol);
+					}
+					$('li').click(function() {
+						var newsId = $(this).attr('id');
+						api.openWin({
+							name : 'news_info',
+							url : '../../html/news_info.html',
+							bounces : false,
+							pageParam : {
+								"newsId" : newsId
+							}
+						});
+					})
+				}
+			});
+		}
+	</script>
+</html>

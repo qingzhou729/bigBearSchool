@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<style>
+			.test-pic {
+				width: 80%;
+				margin: 0 auto;
+				padding: 3px 0 15px 0;
+				display: block;
+			}
+			.ti-symbol {
+				display: block;
+				border: 1px solid #43CABD;
+				padding: 0 10px;
+				/*	width: 36px;*/
+				height: 17px;
+				font-size: 12px;
+				line-height: 19px;
+				text-align: center;
+				color: #43CABD;
+				border-radius: 5px;
+				display: inline-block;
+				position: relative;
+				top: -1px;
+			}
+			.test-title {
+				margin-left: 8px;
+				font-size: 16px;
+				color: #333;
+				display: inline-block;
+				line-height: 30px;
+				padding-right: 5px;
+			}
+			.option {
+				display: inline-block;
+				border: 1px solid #595C5C;
+				color: #595C5C;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				text-align: center;
+				line-height: 26px;
+			}
+			.test-item dd {
+				padding: 10px 0;
+				margin-left: 8px;
+				font-size: 16px;
+				color: #555;
+				width: 100%;
+			}
+			.option-con {
+				padding-left: 5px;
+			}
+			.option-act {
+				/*border-color: #43CABD;*/
+				color: #43CABD;
+			}
+			.test-item {
+				margin-top: -10px;
+			}
+			.test-explain {
+				/*border-top: 1px solid #eee;*/
+				padding: 0 10px;
+			}
+			.test-explain .answer-right {
+				display: none;
+				color: #43CABD;
+			}
+			.test-explain .answer-wrong {
+				display: none;
+				color: #f63942;
+			}
+			.explain {
+				line-height: 26px;
+			}
+			.sub-answer {
+				width: 120px;
+				height: 44px;
+				background: #43CABD;
+				color: #FFFFFF;
+				line-height: 44px;
+				border-radius: 3px;
+				text-align: center;
+				margin: 0 auto;
+				margin-top: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<dl class="test-item">
+			<!--<dt>
+			<span class="ti-symbol">单选题</span>
+			<p class="test-title">
+			这个标志什么含义？
+			</p><img class="test-pic" src="../../image/project/ti.jpg" />
+			</dt>
+			<dd >
+			<span class="option">A</span>
+			<span class="option-con">施工路段绕行</span>
+			</dd>
+			<dd >
+			<span class="option">B</span>
+			<span class="option-con">双向交通</span>
+			</dd>
+			<dd>
+			<span class="option">C</span>
+			<span class="option-con">注意危险</span>
+			</dd>
+			<dd >
+			<span class="option">D</span>
+			<span class="option-con">左右绕行</span>
+			</dd>-->
+		</dl>
+		<div class="test-explain">
+			<!--<p class="answer-right">
+			回答正确
+			</p>
+			<p class="answer-wrong">
+			回答错误
+			</p>
+			<p class="correct-answer">
+			正确答案:B
+			</p>
+			<p class="explain">
+			解释:
+			《道路交通安全法》第二十一条规定：驾驶人驾驶机动车上道路行驶前，应当对机动车的安全技术性能进行认真检查；不得驾驶安全设施不全或者机件不符合技术标准等具有安全隐患的机动车。
+			</p>
+			<p class="chapter">
+			出题章节:安全行车常识
+			</p>-->
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<!--<script  type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script  type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			oneSubject();
+		}
+		//答题获得分数
+		var scoreRadio = 0;
+		var total_Radio = 0;
+		var scoreMult = 0;
+		var total_Mult = 0;
+		var total_score4 = 0;
+		var questionNum4 = 1;
+		function oneSubject() {
+			$.ajax({
+				url : "http://api.jisuapi.com/driverexam/query?appkey=542812e9291ccb52&type=C1&subject=4&pagesize=1&pagenum=1&sort=rand",
+				method : 'get',
+				dataType : 'json',
+				success : function(data) {
+					if (data.msg == 'ok') {
+						var $subject_choice;
+						if (data.result.list[0].answer == "对" || data.result.list[0].answer == "错") {
+							//判断题
+							$subject_choice = '<dt><p class="test-title"><span class="ti-symbol">判断题</span> ' + data.result.list[0].question + '</p><img class="test-pic" src="' + data.result.list[0].pic + '" /></dt>' + '<dd ><span class="option-con">对</span></dd><dd ><span class="option-con">错</span></dd>';
+						} else if (data.result.list[0].answer.length > 1) {
+							//多选题
+							$subject_choice = '<dt><p class="test-title"><span class="ti-symbol">多选题</span> ' + data.result.list[0].question + '</p><img class="test-pic" src="' + data.result.list[0].pic + '" /></dt>' + '<dd ><span class="option-con">' + data.result.list[0].option1 + '</span></dd>' + '<dd ><span class="option-con">' + data.result.list[0].option2 + '</span></dd>' + '<dd><span class="option-con">' + data.result.list[0].option3 + '</span></dd>' + '<dd ><span class="option-con">' + data.result.list[0].option4 + '</span></dd><div class="sub-answer">提交</div>';
+						} else {
+							//单选题
+							$subject_choice = '<dt><p class="test-title"><span class="ti-symbol">单选题</span> ' + data.result.list[0].question + '</p><img class="test-pic" src="' + data.result.list[0].pic + '" /></dt>' + '<dd ><span class="option-con">' + data.result.list[0].option1 + '</span></dd>' + '<dd ><span class="option-con">' + data.result.list[0].option2 + '</span></dd>' + '<dd><span class="option-con">' + data.result.list[0].option3 + '</span></dd>' + '<dd ><span class="option-con">' + data.result.list[0].option4 + '</span></dd>';
+						}
+						var $subject_con = $('.test-item');
+						$subject_con.html('');
+						$subject_con.append($subject_choice);
+						//如果这题没有图片，那么图片元素移除
+						if (data.result.list[0].pic == '') {
+							$('.test-pic').remove();
+						}
+						var $explain = '<p class="answer-right">回答正确</p><p class="answer-wrong">回答错误</p><p class="correct-answer">正确答案:' + data.result.list[0].answer + '</p><p class="explain">解释:' + data.result.list[0].explain + '</p><p class="chapter">出题章节:' + data.result.list[0].chapter + '</p>';
+						var $explain_con = $('.test-explain');
+						//答题后显示答案
+						function showExplain() {
+							$explain_con.html('');
+							$explain_con.append($explain);
+						}
+
+						//多选
+						if (data.result.list[0].answer.length > 1) {
+							$('.test-item dd').on('click', function() {
+								//点击选项样式变化
+								$(this).find('.option-con').addClass('option-act');
+								//							alert($(this).find('.option-con').hasClass('option-act'))
+								var multiselect = '';
+								$('.test-item dd').each(function(i) {
+									var s = $(this).find('.option-con').text();
+									if ($(this).find('.option-con').hasClass('option-act')) {
+										multiselect = multiselect + s.substring(0, 1);
+									}
+								});
+								$('.sub-answer').on('click', function() {
+									if (multiselect == data.result.list[0].answer) {
+										showExplain();
+										$('.answer-right').show();
+										scoreMult = scoreMult + 2;
+									} else {
+										//回答错误
+										showExplain();
+										$('.answer-wrong').show();
+										scoreMult = scoreMult + 0;
+									}
+									$('.sub-answer').remove();
+									$('.test-item dd').off('click');
+									//						alert('得分:' + score)
+									total_Mult = scoreMult;
+									//存到缓存，让其他frame可以调用
+									//									store.set('total_Mult', total_Mult);
+									$api.setStorage('total_Mult', total_Mult);
+									//									alert('多选' + total_Mult)
+								});
+							});
+							//如果没有选择答案，直接提交
+							$('.sub-answer').on('click', function() {
+								//回答错误
+								showExplain();
+								$('.answer-wrong').show();
+								$('.sub-answer').remove();
+								$('.test-item dd').off('click');
+							});
+						} else {
+							//点击选项
+							$('.test-item dd').on('click', function() {
+								//点击选项样式变化
+								$('.test-item dd').find('.option-con').removeClass('option-act');
+								$(this).find('.option-con').addClass('option-act');
+								//判断是否是判断题
+								if (data.result.list[0].answer == "对" || data.result.list[0].answer == "错") {
+									//回答正确
+									if ($(this).find('.option-con').text() == data.result.list[0].answer) {
+										showExplain();
+										$('.answer-right').show();
+										scoreRadio = scoreRadio + 2;
+									} else {
+										//回答错误
+										showExplain();
+										$('.answer-wrong').show();
+										scoreRadio = scoreRadio + 0;
+									}
+								} else {
+									var s = $(this).find('.option-con').text();
+									//单选题
+									if (s.substring(0, 1) == data.result.list[0].answer) {
+										//回答正确
+										showExplain();
+										$('.answer-right').show();
+										scoreRadio = scoreRadio + 2;
+									} else {
+										//回答错误
+										showExplain();
+										$('.answer-wrong').show();
+										scoreRadio = scoreRadio + 0;
+									}
+								}
+								//解除click事件，避免用户选择多次选择题目
+								$('.test-item dd').off('click');
+								//						alert('得分:' + score)
+								total_Radio = scoreRadio;
+								//存到缓存，让其他frame可以调用
+								//								store.set('total_Radio', total_Radio);
+								$api.setStorage('total_Radio', total_Radio);
+							});
+						}
+					}
+					questionNum4++;
+					$api.setStorage('questionNum4', questionNum4);
+					//					store.set('questionNum4', questionNum4);
+				}
+			});
+		}
+
+		//下一题
+		function nextSubject() {
+//			var questionNum4 = store.get('questionNum4');
+			var scoreMult = $api.getStorage('questionNum4');
+			//清除上一题内容
+			$('.test-item').find("*").remove();
+			$('.test-explain').find("*").remove();
+			//加载下一道题
+			oneSubject();
+			var scoreMult = $api.getStorage('total_Mult');
+			var total_Radio = $api.getStorage('total_Radio');
+//			var scoreMult = store.get('total_Mult');
+//			var total_Radio = store.get('total_Radio');
+			//						alert(total_Mult + total_Radio);
+		}
+	</script>
+</html>

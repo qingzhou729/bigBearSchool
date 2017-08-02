@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			html, body {
+				width: 100%;
+				background: #f0f0f0;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.cmnity-items li {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				width: 94%;
+				margin: 0 auto;
+				background: #fff;
+				list-style: none;
+				margin-bottom: 10px;
+				margin-top: 10px;
+				padding-bottom: 10px;
+			}
+			.com-header {
+				line-height: 50px;
+				position: relative;
+			}
+			.com-header .nickName {
+				font-size: 14px;
+				color: #333;
+				line-height: 60px;
+			}
+			.com-header img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				margin: 10px;
+			}
+			.com-time {
+				color: #aaa;
+				font-size: 10px;
+				position: absolute;
+				right: 10px;
+			}
+			.com-content {
+				line-height: 20px;
+				font-size: 15px;
+				color: #111;
+				padding: 0 10px;
+			}
+			.com-footer {
+				line-height: 40px;
+				position: relative;
+			}
+			.com-footer > div {
+				width: 49%;
+				text-align: center;
+				display: inline-block;
+				color: #aaa;
+			}
+			.shu {
+				width: 1px;
+				display: inline-block;
+				height: 20px;
+				background: #eee;
+				left: 49%;
+				position: absolute;
+				top: 12px;
+			}
+			.com-footer div span {
+				display: inline-block;
+				padding: 0 10px;
+			}
+			.cm {
+				font-size: 20px;
+				position: relative;
+				top: 4px;
+			}
+			.publish-btn {
+				width: 56px;
+				height: 56px;
+				border-radius: 50%;
+				background: #02bfad;
+				position: fixed;
+				bottom: 50px;
+				right: 30px;
+			}
+			.publish-btn i {
+				color: #FFFFFF;
+				font-size: 30px;
+				text-align: center;
+				line-height: 58px;
+				position: relative;
+				left: 13px;
+			}
+			.imgsContent img {
+				width: 25%;
+				height: 80px;
+				margin: 5px 5px 5px 0px;
+			}
+			.imgsContent img:first-child {
+				margin-left: 10px;
+			}
+			.praiseed {
+				color: #02BFAD;
+			}
+			.post-content {
+				height: 40px;
+				line-height: 40px;
+				/*width: 100%;*/
+				border: 1px solid #eee;
+				background: #f6f7f9;
+				margin: 10px;
+				color: #999;
+				font-size: 14px;
+				padding-left: 10px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.com-content i {
+				font-size: 18px;
+				color: #EC5151;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="cmnity-items">
+			<!--<li>
+			<div class="contain">
+			<div class="com-header">
+			<img src="../image/coach/pic.png" />
+			<span class="nickName">淮左同学</span>
+			<span class="com-time">3小时前</span>
+			</div>
+			<div class="com-content">
+			给你的帖子一个<i class="iconfont">&#xe666;</i>
+			</div>
+			<div class="post-content">
+			今天下雨还考试了！折腾今天下雨还考试了！折腾今天下雨还考试了！折腾
+			</div>
+			</div>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		function refreshReplyPraiseList() {
+			//			var loginUserId = store.get('loginUserId');
+			var loginUserId = $api.getStorage('loginUserId');
+			var $cmnityItems = $('.cmnity-items');
+			$cmnityItems.empty();
+			$.ajax({
+				url : IP + '/personalcenter/selectReplyPraise.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					postAuthorId : loginUserId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						//					alert(ok )
+						for (var i = 0; i < data.objectList.length; i++) {
+							var $list = $('<li tapmode></li>').prependTo($cmnityItems);
+							var $contain = $('<div></div>').addClass('contain').appendTo($list);
+							//							$contain.attr("id", data.objectList[i].id);
+							var $comHeader = $('<div></div>').addClass('com-header').appendTo($contain);
+							var $comContent = $('<div></div>').addClass('com-content').html('给你一个 <i class="iconfont">&#xe666;</i>').appendTo($contain);
+							var $userImg = $('<img>').attr('src', data.objectList[i].praiseUrl).appendTo($comHeader);
+							//							$userImg.attr("postAuthorId", data.objectList[i].praiseUrl);
+							//							alert(data.objectList[i].postAuthorUrl)
+							var $nickName = $('<span></span>').addClass('nickName').html(data.objectList[i].praiseName).appendTo($comHeader);
+							var $comTime = $('<span></span>').addClass('com-time').html(data.objectList[i].postTime).appendTo($comHeader);
+							var $postContent = $('<div></div>').addClass('post-content').html(data.objectList[i].postContent).appendTo($contain);
+						}
+					}
+				}
+			})
+		}
+
+		apiready = function() {
+			refreshReplyPraiseList();
+		};
+	</script>
+</html>

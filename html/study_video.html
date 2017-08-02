@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<style>
+			body {
+			}
+		</style>
+	</head>
+	<body></body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			var videoId = api.pageParam.videoId;
+			$.ajax({
+				url : IP + '/personalcenter/subVideo.do',
+				dataType : 'json',
+				method : 'post',
+				data : {
+					id : videoId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						var videoPlayer = api.require('videoPlayer');
+						videoPlayer.play({
+							texts : {
+								head : {
+									title : data.objectList[0].name
+								}
+							},
+							styles : {
+								head : {
+									bg : 'rgba(0.5,0.5,0.5,0.7)',
+									height : 44,
+									titleSize : 20,
+									titleColor : '#fff',
+									backSize : 24,
+									backImg : 'fs://img/back.png',
+									setSize : 20,
+									setImg : 'fs://img/set.png'
+								},
+								foot : {
+									bg : 'rgba(0.5,0.5,0.5,0.7)',
+									height : 44,
+									playSize : 24,
+									playImg : 'fs://img/back.png',
+									pauseImg : 'fs://img/back.png',
+									nextSize : 24,
+									nextImg : 'fs://img/back.png',
+									timeSize : 10,
+									timeColor : '#fff',
+									sliderImg : 'fs://img/slder.png',
+									progressColor : '#696969',
+									progressSelected : '#76EE00',
+								}
+							},
+							path : data.objectList[0].videoUrl, //（可选项）字符串类型；文档的路径，支持网络和本地（fs://）路径；默认：未传值时不播放
+							//在 android 平台上不支持 widget://
+							autoPlay : true //（可选项）布尔类型；打开时是否自动播放；默认：true（自动播放）
+						}, function(ret, err) {
+							if (ret) {
+								//					alert(JSON.stringify(ret));
+								if (ret.eventType == 'back') {
+									videoPlayer.close();
+									api.closeWin();
+								}
+							} else {
+								alert(JSON.stringify(err));
+							}
+						});
+					}
+				}
+			});
+		};
+	</script>
+</html>

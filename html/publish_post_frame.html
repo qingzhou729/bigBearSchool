@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>setting</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../css/public.css" />
+		<style>
+			body, html {
+				background: #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			header {
+				background-color: #43CABD;
+			}
+			h1 {
+				height: 50px;
+				line-height: 50px;
+				color: #fff;
+				font-size: 20px;
+				text-align: center;
+				font-weight: 300;
+			}
+			.back {
+				position: absolute;
+				left: 10px;
+				bottom: 0px;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+			}
+			.back i {
+				color: #FFFFFF;
+				font-size: 24px;
+			}
+			.share {
+				position: absolute;
+				right: 0px;
+				bottom: 0px;
+				width: 50px;
+				height: 50px;
+				/*	background: url(../image/header/share.png) center center no-repeat;*/
+				background-size: 24px auto;
+			}
+			section {
+				width: 100%;
+				height: 40px;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				border-bottom: 1px solid #f0f0f0;
+				background: #fff;
+			}
+			section > div {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				width: 100%;
+				text-align: center;
+				line-height: 40px;
+				color: #333;
+				font-size: 14px;
+				border-right: 1px solid #f0f0f0;
+			}
+			section > div:nth-last-child {
+				border-right: none;
+			}
+			.com-win {
+				width: 100%;
+				height: 400px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: #fff;
+				z-index: 100;
+				padding: 0px 15px;
+			}
+			.header {
+				height: 60px;
+				line-height: 60px;
+				font-size: 18px;
+				background: #fff;
+				border-bottom: 1px solid #eee;
+				color: #333;
+			}
+			.content {
+				padding: 15px 0;
+				color: #aaa;
+			}
+			.content textarea {
+				color: #333;
+				height: 100px;
+				width: 90%;
+				font-size: 16px;
+				line-height: 26px;
+			}
+			.btns {
+				position: absolute;
+				right: 35px;
+				bottom: -30px;
+			}
+			.btns span {
+				display: inline-block;
+				height: 60px;
+				width: 60px;
+				border-radius: 50%;
+				margin: 0 10px;
+				text-align: center;
+				font-size: 15px;
+				color: #fff;
+				line-height: 60px;
+			}
+			.btns .cancle-btn {
+				background: #ec5151;
+			}
+			.confirm-btn {
+				background: #02BFAD;
+			}
+			.img-container {
+				display: inline-block;
+			}
+			.img-container .img-con {
+				margin: 3px;
+				width: 80px;
+				height: 80px;
+				border: 1px solid #eee;
+				display: inline-block;
+				border-radius: 3px;
+			}
+			.img-container .img-con img {
+				width: 80px;
+				height: 80px;
+			}
+			.upload-img {
+				width: 80px;
+				height: 80px;
+				border: 1px solid #ddd;
+				border-radius: 3px;
+				position: relative;
+				display: inline-block;
+				margin: 3px;
+			}
+			.upload-img .rol {
+				width: 30px;
+				height: 1px;
+				background: #ddd;
+				margin: 0 auto;
+				margin-top: 40px;
+			}
+			.upload-img .row {
+				width: 1px;
+				height: 30px;
+				background: #ddd;
+				position: absolute;
+				top: 25px;
+				left: 40px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--<header>
+		<div class="back" tapmode onclick="api.closeWin();">
+		<i class="iconfont">&#xe60d;</i>
+		</div>
+		<h1>发表话题</h1>
+		<span class="publish-text" tapmode onclick="publishPost();">发布</span>
+		</header>-->
+		<div  class="com-win-bg">
+			<div class="com-win">
+				<div class="content">
+					<textarea placeholder = "随便说点什么吧~"></textarea>
+				</div>
+				<div class="img-container clearfix">
+					<!--<div class="img-con fl"><img src="../../image/news/news.png" />
+					</div>-->
+					<div tapmode class="upload-img fl " onclick="uploadImgs();">
+						<div class="rol"></div>
+						<div class="row"></div>
+					</div>
+				</div>
+				<!--<div class="btns">
+				<span class="cancle-btn" tapmode>取消</span>
+				<span class="confirm-btn" tapmode onclick="publishPost();">确认</span>
+				</div>-->
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<!--<script type="text/javascript" src="../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../script/public.js"></script>
+	<script type="text/javascript">
+		//		var loginUserId = store.get('loginUserId');
+		var loginUserId = $api.getStorage('loginUserId');
+		var postImgids = '';
+		function uploadImgs() {
+			api.actionSheet({
+				cancelTitle : '取消',
+				buttons : ['拍照', '打开相册']
+			}, function(ret, err) {
+				if (ret.buttonIndex == 3) {
+					return;
+				}
+				var sourceType = (ret.buttonIndex == 1) ? 'camera' : 'album';
+				api.getPicture({
+					sourceType : sourceType,
+					encodingType : 'png',
+					mediaValue : 'pic',
+					destinationType : 'url',
+					allowEdit : true,
+					quality : 90,
+					saveToPhotoAlbum : true,
+					targetWidth : 100,
+					targetHeight : 100,
+				}, function(ret, err) {
+					if (ret) {
+						imgSrc = ret.data;
+						var imgCon = $('<div></div>').addClass('img-con fl').prependTo($('.img-container'));
+						var postimg = $('<img />').attr('src', imgSrc).appendTo(imgCon);
+						if (imgSrc != "") {
+							var ele = $('#avatar');
+							ele.attr('src', imgSrc);
+							api.ajax({
+								url : IP + '/pic/upload.do',
+								method : 'post',
+								dataType : 'json',
+								data : {
+									files : {
+										uploadFile : ret.data
+									}
+								}
+							}, function(ret, err) {
+								if (ret) {
+									postImgids = postImgids + ret.fileId + ','
+									if (postImgids.length == 24) {
+										Toast('只能传6张图哦。', 500);
+										$('.upload-img').hide();
+									}
+								} else {
+									api.alert({
+										msg : JSON.stringify(err)
+									});
+								}
+							});
+						}
+					}
+				});
+			});
+		}
+
+		//发帖
+		function publishPost() {
+			var postContent = $('.content textarea').val();
+			$.ajax({
+				url : IP + '/personalcenter/insertPost.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					postAuthorId : loginUserId,
+					postContent : postContent,
+					postPic : postImgids
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						api.sendEvent({
+							name : 'publish_post',
+							extra : {
+								my : "xuexue"
+							}
+						});
+						$('div').remove('.imgCon');
+						$('.content textarea').val('');
+						Toast("发布成功", 600);
+						setTimeout(function() {
+							api.closeWin();
+						}, 700);
+					}
+				}
+			});
+		}
+
+		apiready = function() {
+			var header = $api.dom('header');
+			$api.fixIos7Bar(header);
+		};
+	</script>
+</html>

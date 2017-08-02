@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			body, html {
+				width: 100%;
+			}
+			header {
+				width: 100%;
+				background-color: #43CABD;
+				z-index: 1000;
+				position: fixed;
+				top: 0;
+				height: 45px;
+			}
+			h1 {
+				height: 45px;
+				line-height: 48px;
+				color: #fff;
+				font-size: 20px !important;
+				text-align: center;
+				font-weight: 300;
+			}
+			.back {
+				position: absolute;
+				left: 10px;
+				bottom: 0px;
+				top: 0px;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+				/*background:red;*/
+				z-index: 1001;
+			}
+			.back .iconfont {
+				color: #FFFFFF !important;
+				font-size: 24px !important;
+				z-index: 1002;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="back" tapmode onclick="api.closeWin();">
+				<i class="iconfont">&#xe60d;</i>
+			</div>
+			<h1>我关注的人</h1>
+		</header>
+		<div id="J_demo"></div>
+	</body>
+	<!--[if lt IE 9]>
+	<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+	<![endif]-->
+	<!-- 自动适配移动端与pc端 -->
+	<script src="https://g.alicdn.com/aliww/??h5.openim.sdk/1.0.6/scripts/wsdk.js,h5.openim.kit/0.3.3/scripts/kit.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script>
+		apiready = function() {
+			//			var loginUserId = store.get('loginUserId');
+			var loginUserId = $api.getStorage('loginUserId');
+			var loginUserImg = $api.getStorage('loginUserImg');
+			//			var loginUserImg = store.get('loginUserImg');
+			var friendId = api.pageParam.friendId;
+			$.ajax({
+				url : IP + '/common/checkAccount.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					id : friendId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						$('header h1').html(data.objectList[0].nickName);
+						WKIT.init({
+							uid : loginUserId + '',
+							appkey : 23705355,
+							credential : 'beardriving',
+							touid : friendId + '',
+							container : document.getElementById('J_demo'),
+							themeBgColor : '#43CABD',
+							themeColor : '#fff',
+							toAvatar : data.objectList[0].imageUrl,
+							avatar : loginUserImg,
+							hideLoginSuccess : true,
+							imgUploader : false,
+							onLoginSuccess : function(data) {
+							},
+							onMsgSent : function(data) {
+							},
+							onMsgReceived : function(data) {
+							},
+						});
+					}
+				}
+			})
+		}
+	</script>
+</html>

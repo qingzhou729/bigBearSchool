@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<style>
+			body {
+				width: 100%;
+				background: #fefefe;
+			}
+			.news-title {
+				width: 90%;
+				margin: 0 auto;
+				font-size: 24px;
+				line-height: 36px;
+				color: #000;
+				padding-top: 15px;
+				font-weight: 700;
+			}
+			.first-img {
+				width: 90%;
+				margin: 0 auto;
+				margin-top: 10px;
+			}
+			.first-img img {
+				width: 100%
+			}
+			.other-img {
+				width: 90%;
+				margin: 0 auto;
+				margin-top: 10px;
+			}
+			.other-img img {
+				width: 100%
+			}
+			.news-symbol {
+				width: 90%;
+				margin: 0 auto;
+			}
+			.news-art {
+				line-height: 28px;
+				font-size: 18px;
+				color: #333;
+				text-indent: 2em;
+				width: 90%;
+				margin: 10px auto;
+			}
+			.news-res {
+				color: #43CABD;
+				font-size: 13px;
+				margin: 10px 10px 0 0;
+			}
+			.news-time {
+				font-size: 13px;
+				color: #aaa;
+				margin: 10px 10px 0;
+			}
+			.h100 {
+				height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="news-title"></div>
+		<div class="news-symbol">
+			<span class="news-res"></span><span class="news-time"></span>
+		</div>
+		<div class="first-img">
+			<img src="" />
+		</div>
+		<article class="news-art"></article>
+		<div class="other-img">
+			<img src="" />
+		</div>
+		<div class="h100"></div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			var newsId = api.pageParam.newsId;
+			var newsTitle = $('.news-title');
+			var newsArt = $('.news-art');
+			var newsAuthor = $('.news-res');
+			var newsTime = $('.news-time');
+			$.ajax({
+				url : IP + '/homepage/newsList.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					id : newsId
+				},
+				success : function(data) {
+					newsTitle.html(data.objectList[0].newsName);
+					newsArt.html(data.objectList[0].newsText);
+					newsAuthor.html(data.objectList[0].author);
+					newsTime.html(data.objectList[0].newsTime);
+					$('.first-img img').attr('src', data.objectList[0].picList[0].url);
+					for (var i = 1; i < data.objectList[0].picList.length; i++) {
+						$('.other-img img').attr('src', data.objectList[0].picList[i].url);
+					}
+				}
+			})
+		};
+	</script>
+</html>

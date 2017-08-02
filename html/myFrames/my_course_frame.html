@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>home frame</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			html, body {
+				height: 100%;
+				width: 100%;
+				background-color: rgb(240,240,240);
+			}
+			section {
+				width: 100%;
+				height: 40px;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				border-bottom: 1px solid #f0f0f0;
+				background: #fff;
+			}
+			section > div {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				width: 100%;
+				text-align: center;
+				line-height: 40px;
+				color: #333;
+				font-size: 14px;
+				border-right: 1px solid #f0f0f0;
+			}
+			section > div:nth-last-child {
+				border-right: none;
+			}
+			.course-list {
+				background: #fff;
+				position: relative;
+				width: 95%;
+				margin: 0 auto;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				/*border-bottom: 1px solid #EEEEEE;*/
+			}
+			.course-pic {
+				padding: 10px;
+			}
+			.course-pic, .course-pic img {
+				width: 110px;
+				height: 75px;
+			}
+			.course-info {
+				padding: 10px 0 10px 0;
+				width: 55%;
+				position: relative;
+				height: 75px;
+			}
+			.course-title {
+				font-size: #333;
+				font-size: 16px;
+			}
+			.coach-stars {
+				position: absolute;
+				bottom: 25px;
+			}
+			.coach-stars i {
+				color: #ffa630;
+				font-size: 18px;
+			}
+			.breif {
+				position: absolute;
+				bottom: 10px;
+				font-size: 13px;
+				color: #333;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+			.course-time {
+				font-size: 18px;
+				color: #333;
+				position: absolute;
+				bottom: 10px;
+				left: 130px;
+			}
+			.cancel-btn {
+				font-size: 12px;
+				color: #ccc;
+				position: absolute;
+				right: 1px;
+				top: 0px;
+				width: 80px;
+				text-align: center;
+				/*background: red;*/
+				padding: 20px 0;
+			}
+			.cancel-btn i {
+				color: #e05400;
+				display: block;
+				font-size: 26px;
+				margin-bottom: 3px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="course-lists">
+			<!--<li class="course-list clearfix">
+			<div class="course-pic fl">
+			<img src="../image/project/daoche.jpeg" />
+			</div>
+			<div class="course-info fl">
+			<div class="course-title">
+			倒车入库
+			</div>
+			<div class="coach-stars">
+			<i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i><i class="iconfont">&#xe659;</i>
+			</div>
+			<div class="breif">
+			包过，傻子都能过
+			</div>
+			</div>
+			<div class="course-time">
+			3月12日
+			</div>
+			<div class = 'cancel-btn'><i class="iconfont">&#xe624;</i>取消课程</div>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script>
+		function canaelMyCourse() {
+		}
+
+		function refreshMyCourses() {
+			//			var loginUserId = store.get('loginUserId');
+			var loginUserId = $api.getStorage('loginUserId');
+			var $courseLists = $('.course-lists');
+			$courseLists.empty();
+			$.ajax({
+				url : IP + '/common/selectStuCourse.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					studentId : loginUserId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						//					alert('ok')
+						for (var i = 0; i < data.objectList.length; i++) {
+							var s = data.objectList[i].courseTime.substring(0, 10);
+							var $list = $('<li tapmode></li>').addClass('course-list clearfix').prependTo($courseLists);
+							$list.attr("courseId", data.objectList[i].courseId);
+							var $coursePic = $('<div></div>').addClass('course-pic fl').appendTo($list);
+							var $img = $('<img>').attr('src', data.objectList[i].courseUrl).appendTo($coursePic);
+							var $courseInfo = $('<div></div>').addClass('course-info fl').appendTo($list);
+							var $courseTitle = $('<p></p>').addClass('course-title').html(data.objectList[i].courseName).appendTo($courseInfo);
+							//						var $coachStars = $('<p></p>').addClass('coach-stars').appendTo($courseInfo);
+							//						for (var j = 0; j < 5; j++) {
+							//							var $star = $('<i></i>').html('&#xe659;').addClass('iconfont').appendTo($coachStars);
+							//						}
+							//							var $coachBrief = $('<div></div>').addClass('breif').html(data.objectList[i].introduction).appendTo($courseInfo);
+							var $coachBrief = $('<div></div>').addClass('course-time').html(s).appendTo($list);
+							var $cancelbtn = $('<div></div>').addClass('cancel-btn').html('<i class="iconfont">&#xe624;</i>取消预约').appendTo($list);
+							$cancelbtn.attr("id", data.objectList[i].id);
+						}
+						//
+						$('li').click(function() {
+							var id = $(this).attr('id');
+							//								alert(id);
+							var courseId = $(this).attr('courseId');
+							api.openWin({
+								name : '../../html/course_info',
+								url : '../../html/course_info.html',
+								bounces : false,
+								pageParam : {
+									"courseId" : courseId
+								}
+							});
+						})
+						$('.cancel-btn').click(function(e) {
+							e.stopPropagation();
+							var id = $(this).attr('id');
+							var courseId = $(this).attr('courseId');
+							api.confirm({
+								title : '',
+								msg : '确定要取消该课程吗？',
+								buttons : ['确定', '再想想']
+							}, function(ret, err) {
+								var index = ret.buttonIndex;
+								if (index == 1) {
+									$.ajax({
+										url : IP + '/common/deleteStuCourse.do',
+										method : 'post',
+										dataType : 'json',
+										data : {
+											studentId : loginUserId,
+											courseId : courseId,
+											id : id
+										},
+										success : function(data) {
+											if (data.flag == 1) {
+												Toast('取消预约成功', 500);
+												refreshMyCourses();
+											}
+										}
+									})
+								}
+							});
+						})
+					}
+				}
+			});
+		}
+
+		apiready = function() {
+			refreshMyCourses();
+		};
+	</script>
+</html>

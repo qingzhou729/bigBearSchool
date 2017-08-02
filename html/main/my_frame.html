@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css" />
+		<style>
+			html, body {
+				width: 100%;
+				background-color: #f0f0f0;
+			}
+			.my-info, .otherinfo {
+				height: 180px;
+				background: #43CABD;
+			}
+			.picCon {
+				display: block;
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				margin: 0px auto;
+				padding: 40px 0 10px 0;
+			}
+			.user-pic {
+				display: block;
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				margin: 0px auto;
+			}
+			.user-name, .login {
+				font-size: 15px;
+				color: #fff;
+				text-align: center;
+			}
+			.user-brief {
+				font-size: 13px;
+				color: #328a82;
+				text-align: center;
+			}
+			.my-list-item {
+				margin-top: 10px;
+			}
+			.my-list-item li {
+				background: #ffffff;
+				height: 50px;
+				border-bottom: 1px solid #eee;
+				line-height: 50px;
+				position: relative;
+			}
+			.my-list-item li .symbol-list {
+				position: absolute;
+				left: 15px;
+				top: 2px;
+				font-size: 20px;
+				color: #ccc;
+			}
+			.my-list-item li .right-icon {
+				font-size: 16px;
+				color: #ddd;
+				position: absolute;
+				right: 15px;
+				top: 0px;
+			}
+			.my-list-item li span {
+				text-align: left;
+				text-indent: 50px;
+				font-size: 16px;
+				color: #666;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="my-info" tapmode >
+			<div class="picCon">
+				<img class="user-pic" src="" />
+			</div>
+			<p class="user-name"></p>
+			<p class="user-brief"></p>
+		</div>
+		<div class="otherinfo" style="display: none" tapmode >
+			<div class="picCon">
+				<img class="user-pic" src="" />
+			</div>
+			<div class="login">
+				去登录
+			</div>
+		</div>
+		<ul class="my-list-item">
+			<li tapmode  onclick="fnOpenmyFriendstWin();">
+				<i class="iconfont symbol-list">&#xe623;</i><span>我的关注</span><i class="iconfont right-icon">&#xe60e;</i>
+			</li>
+			<li tapmode onclick="fnOpenmyFunsstWin();">
+				<i class="iconfont symbol-list">&#xe792;</i><span>我的粉丝</span><i class="iconfont right-icon">&#xe60e;</i>
+			</li>
+			<li tapmode onclick="fnOpenMyCoursetWin();">
+				<i class="iconfont symbol-list">&#xe615;</i><span>预约课程查看</span><i class="iconfont right-icon">&#xe60e;</i>
+			</li>
+			<li tapmode onclick="fnOpenPersonDatailtWin();">
+				<i class="iconfont symbol-list">&#xe62f;</i><span>个人资料</span><i class="iconfont right-icon">&#xe60e;</i>
+			</li>
+			<li tapmode onclick="fnOpenmySettingtWin();">
+				<i class="iconfont symbol-list">&#xe61f;</i><span>设置</span><i class="iconfont right-icon">&#xe60e;</i>
+			</li>
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		var winNames = ['my_friends', 'my_funs', 'my_course', 'person_datail', 'my_setting'];
+		var headerH;
+		var footerH;
+		function fnSwitchWin(index_) {
+			// for header switch
+			var header = $api.dom('header');
+			var footerSections = $api.domAll(footer, 'section');
+			for (var i = 0; i < footerSections.length; i++) {
+				$api.removeCls(footerSections[i], 'Active');
+			}
+			$api.addCls(footerSections[index_], 'Active');
+			// for frame switch
+			for (var i = 0; i < frameNames.length; i++) {
+				api.setFrameAttr({
+					name : frameNames[i] + '_frame',
+					hidden : true
+				});
+			};
+			api.openWin({
+				name : winNames[index_],
+				url : winNames[index_] + '.html',
+				bounces : false,
+				pageParam : {
+					key : ''
+				}
+			});
+		}
+
+		function fnCheckLogin() {
+			//$api.rmStorage('userInfo');
+			var userInfo = $api.getStorage('userInfo');
+			if (userInfo && userInfo.accessToken) {
+				api.openWin({
+					name : 'person_datail',
+					url : '../../html/myFrames/person_datail.html',
+					bounces : false,
+					pageParam : {
+						key : ''
+					}
+				});
+			} else {
+				api.openWin({
+					name : 'login',
+					url : '../../html/myFrames/chat.html',
+					bounces : false,
+				});
+			}
+			api.addEventListener({
+				name : 'setuserinfo'
+			}, function(ret, err) {
+				fnUpdateUserInfo();
+			});
+			api.addEventListener({
+				name : 'logout'
+			}, function(ret, err) {
+				fnResetUserInfo();
+			});
+		}
+
+		function fnOpenPersonDatailtWin() {
+			api.openWin({
+				name : 'person_datail',
+				url : '../../html/myFrames/person_datail.html',
+				bounces : false,
+				slidBackEnabled : false,
+			});
+		}
+
+		function fnOpenmyFriendstWin() {
+			api.openWin({
+				name : 'my_friends',
+				url : '../../html/myFrames/my_friends.html',
+				bounces : false,
+				slidBackEnabled : false,
+			});
+		}
+
+		function fnOpenmySettingtWin() {
+			api.openWin({
+				name : 'setting',
+				url : '../../html/myFrames/setting.html',
+				bounces : false,
+				slidBackEnabled : false,
+			});
+		}
+
+		function fnOpenmyFunsstWin() {
+			api.openWin({
+				name : 'my_friends',
+				url : '../../html/myFrames/my_funs.html',
+				bounces : false,
+				slidBackEnabled : false,
+			});
+		}
+
+		function fnOpenMyCoursetWin() {
+			var flashSaleId;
+			api.openWin({
+				name : 'my_course',
+				url : '../../html/myFrames/my_course.html',
+				bounces : false,
+				slidBackEnabled : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		function initUserInfo() {
+			var $userOne = $('.user-brief');
+			var $userNickname = $('.user-name');
+			var $userImg = $('.user-pic');
+			$.ajax({
+				url : IP + '/common/loginVerify.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					telephone : $api.getStorage('userTel'),
+					password : $api.getStorage('userPwd')
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						$userNickname.html(data.objectList[0].nickName);
+						$userOne.html(data.objectList[0].signature);
+						$userImg.attr('src', data.objectList[0].imageUrl);
+						$api.setStorage('loginUserImg', data.objectList[0].imageUrl);
+					}
+				}
+			})
+		}
+
+		apiready = function() {
+			initUserInfo();
+			api.addEventListener({
+				name : 'person_back'
+			}, function(ret) {
+				if (ret && ret.value) {
+					$('.my-info').show();
+					initUserInfo();
+					$('.otherinfo').hide();
+				}
+			});
+			api.addEventListener({
+				name : 'out_login'
+			}, function(ret) {
+				if (ret && ret.value) {
+					$('.my-info').hide();
+					$('.otherinfo').show();
+					$('.login').click(function() {
+						api.openWin({
+							name : 'login',
+							url : '../../html/login.html',
+							bounces : false,
+							slidBackEnabled : false,
+							pageParam : {
+								key : ''
+							},
+							animation : {
+								type : 'none'
+							}
+						});
+					})
+				}
+			});
+		};
+	</script>
+</html>

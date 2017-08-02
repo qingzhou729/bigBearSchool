@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+		<style>
+			html, body {
+				background: #F0F0F0;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.com-header {
+				width: 100%;
+				height: 60px;
+				line-height: 60px;
+				position: relative;
+				/*border-bottom: 1px solid #eee;*/
+				background: #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.com-header .nickName {
+				font-size: 14px;
+				color: #333;
+				display: inline-block;
+				height: 60px;
+				/*background:red;*/
+			}
+			.com-header img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				margin: 8px;
+			}
+			.com-time {
+				color: #aaa;
+				font-size: 10px;
+				position: absolute;
+				right: 10px;
+			}
+			.imgsContent {
+				background: #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				padding-bottom: 10px;
+			}
+			.imgsContent img {
+				width: 25%;
+				height: 80px;
+				margin: 5px 5px 5px 0px;
+				border: 1px solid #f0f0f0;
+			}
+			.imgsContent img:nth-child(3n+1) {
+				margin-left: 10px;
+			}
+			.com-content {
+				line-height: 20px;
+				font-size: 15px;
+				color: #111;
+				padding: 10px;
+				background: #fff;
+				/*border: 1px solid #eee;*/
+				/*width: 95%;*/
+				padding: 10px;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.com-footer {
+				line-height: 40px;
+				position: relative;
+				background: #fff;
+			}
+			.com-footer > div {
+				width: 49%;
+				text-align: center;
+				display: inline-block;
+				color: #aaa;
+			}
+			.shu {
+				width: 1px;
+				display: inline-block;
+				height: 20px;
+				background: #eee;
+				left: 49%;
+				position: absolute;
+				top: 12px;
+			}
+			.com-footer div span {
+				display: inline-block;
+				padding: 0 10px;
+			}
+			.cm {
+				font-size: 20px;
+				position: relative;
+				top: 4px;
+			}
+			.comment_nums {
+				font-size: 12px;
+				color: #888;
+				text-indent: 15px;
+				line-height: 26px;
+			}
+			.comment-head {
+				width: 100%;
+				height: 60px;
+				line-height: 60px;
+				position: relative;
+				/*border-bottom: 1px solid #eee;*/
+				background: #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.comment-head .name {
+				font-size: 14px;
+				color: #333;
+				display: inline-block;
+				height: 60px;
+				/*background:red;*/
+			}
+			.comment-head img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				margin: 8px;
+			}
+			.comment-head .time {
+				color: #aaa;
+				font-size: 10px;
+				display: inline-block;
+				padding-left: 6px;
+				position: relative;
+				top: -1px;
+			}
+			.comment-info {
+				padding: 0px 13px 10px;
+				line-height: 20px;
+				font-size: 13px;
+				color: #555;
+			}
+			.comment-lists li {
+				background: #ffffff;
+				border-bottom: 1px solid #eee;
+			}
+			.name span {
+				color: #02BFAD;
+				font-size: 12px;
+				display: inline-block;
+				padding: 0 7px;
+				position: relative;
+				top: -1px;
+			}
+			.comment-btn {
+				background: #19B4FF;
+			}
+			.pubToPost {
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				line-height: 60px;
+				text-align: center;
+				background: #02BFAD;
+				color: #fff;
+				position: fixed;
+				bottom: 50px;
+				right: 30px;
+			}
+			.com-win {
+				width: 100%;
+				height: 300px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: #fff;
+				z-index: 100;
+				padding: 0px 15px;
+			}
+			.com-win-bg {
+				width: 100%;
+				height: 100%;
+				z-index: 199;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				/*	background: red;*/
+				background: #f1f1f1;
+				display: none;
+			}
+			.content {
+				padding: 15px 0;
+				color: #aaa;
+			}
+			.content textarea {
+				color: #333;
+				height: 70px;
+				width: 90%;
+				font-size: 16px;
+				line-height: 26px;
+			}
+			.prompt {
+				color: #02BFAD;
+				width: 90%;
+				font-size: 16px;
+				line-height: 40px;
+			}
+			.btns {
+				position: absolute;
+				right: 35px;
+				bottom: -30px;
+			}
+			.btns span {
+				display: inline-block;
+				height: 60px;
+				width: 60px;
+				border-radius: 50%;
+				margin: 0 10px;
+				text-align: center;
+				font-size: 15px;
+				color: #fff;
+				line-height: 60px;
+			}
+			.btns .cancle-btn {
+				background: #ec5151;
+			}
+			#confirm-btn {
+				background: #02BFAD;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="com-header">
+			<img src="" />
+			<span class="nickName"></span>
+			<span class="com-time"></span>
+		</div>
+		<div class="x">
+			<div class="com-content"></div>
+		</div>
+		<div class="imgsContent">
+			<!--<img src="../image/community/banner-3.png"/>-->
+		</div>
+		<!--<div class="com-footer">
+		<div class="comment-btn">
+		<i class="iconfont cm">&#xe601;</i><span class="commentNums">评论</span>
+		</div>
+		<span class="shu"></span>
+		<div class="praise-con">
+		<i class="iconfont pr ">&#xe666;</i><span class="praiseNums">点赞</span>
+		</div>
+		</div>-->
+		<div class="comment_nums">
+			车友评论（0）
+		</div>
+		<!--评论列表-->
+		<ul class="comment-lists">
+			<!--<li>
+			<div class="comment-head"><img src="../image/coach/pic.png" /><span class="name">花自作同学 回复: 嘻嘻</span>
+			<span class="time">3小时</span>
+			</div>
+			<div class="comment-info">
+			我这也下雨了，通病啊~我这也下雨了，通病啊~我这也下雨了，通病啊~
+			</div>
+			</li>-->
+		</ul>
+		<div class="pubToPost" >
+			评论
+		</div>
+		<div  class="com-win-bg">
+			<div class="com-win">
+				<div class="prompt"></div>
+				<div class="content" >
+					<textarea placeholder = "随便说点什么吧~"></textarea>
+				</div>
+				<div class="btns">
+					<span class="cancle-btn">取消</span>
+					<span id="confirm-btn">确认</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/jquery-3.1.1.min.js"></script>
+	<!--<script type="text/javascript" src="../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../script/public.js"></script>
+	<script type="text/javascript">
+		var replyerId;
+		//
+		apiready = function() {
+			commentId = api.pageParam.commentId;
+			//			loginUserId = store.get('loginUserId');
+			loginUserId = $api.getStorage('loginUserId');
+			refreshPostInfo();
+			refreshPostComLists();
+		};
+		//刷新帖子详情
+		function refreshPostInfo() {
+			var $userImg = $('.com-header img');
+			var $userNickname = $('.nickName');
+			var $pubTime = $('.com-time');
+			var $comContent = $('.com-content');
+			var $comNums = $('.comment_nums');
+			var $imgsContent = $('.imgsContent');
+			$.ajax({
+				url : IP + '/personalcenter/postList.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					id : commentId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						$userImg.attr('src', data.objectList[0].postAuthorUrl);
+						$userNickname.html(data.objectList[0].postAuthorName);
+						$pubTime.html(data.objectList[0].postTime);
+						$comContent.html(data.objectList[0].postContent);
+						if (data.objectList[0].picList == undefined || data.objectList[0].picList == '') {
+							$imgsContent.html('');
+						} else {
+							for (var j = 0; j < data.objectList[0].picList.length; j++) {
+								var $conImgs = $('<img>').attr('src', data.objectList[0].picList[j].url).appendTo($imgsContent);
+							}
+						}
+					}
+				}
+			});
+		}
+
+		//对帖子的评论者评论
+		function replyOtherCom(replayerId, replayerName) {
+			replyerId = replayerId;
+			replyerName = replayerName;
+			if (replyerId == loginUserId) {
+				Toast('自己不能回复自己哦。', 1000);
+			} else {
+				$('.content textarea').attr('placeholder', '回复' + replyerName + ':');
+				$('.com-win-bg').show();
+			}
+		}
+
+
+		$('.pubToPost').click(function() {
+			replyerId = '';
+			$('.com-win-bg').show();
+		})
+		$('#confirm-btn').click(function() {
+			var replyContent = $('.content textarea').val();
+			$.ajax({
+				url : IP + '/personalcenter/insertPostComment.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					postId : commentId,
+					beReplyerId : replyerId || '',
+					replyerId : loginUserId,
+					replyContent : replyContent
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						Toast('回复成功。', 500);
+						refreshPostComLists();
+						$('.com-win-bg').hide();
+					}
+				}
+			})
+		})
+		function refreshPostComLists() {
+			var commentId = api.pageParam.commentId;
+			var $commentLists = $('.comment-lists');
+			//			alert($commentLists)
+			$commentLists.html('');
+			$.ajax({
+				url : IP + '/personalcenter/postCommentList.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					postId : commentId
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						for (var i = 0; i < data.objectList.length; i++) {
+							$('.comment_nums').html('车友评论（' + data.total + '）');
+							var $list = $('<li tapmode onclick="replyOtherCom(' + data.objectList[i].replyerId + ',' + "'" + data.objectList[i].replyerName + "'" + ');"></li>').prependTo($commentLists);
+							//							$list.attr('replyerId', data.objectList[i].replyerId);
+							//							$list.attr('replyerName', data.objectList[i].replyerName);
+							var $commentHead = $('<div></div>').addClass('comment-head').appendTo($list);
+							var $img = $('<img>').attr('src', data.objectList[i].replyerUrl).appendTo($commentHead);
+							if (data.objectList[i].beReplyerId == null) {
+								var $name = $('<span></span>').addClass('name').html(data.objectList[i].replyerName).appendTo($commentHead);
+							} else {
+								var $name = $('<span></span>').addClass('name').html(data.objectList[i].replyerName + '<span>回复</span> ' + data.objectList[i].beReplyerName).appendTo($commentHead);
+							}
+							var $time = $('<span></span>').addClass('time').html(data.objectList[i].replyTime).appendTo($commentHead);
+							var $comcon = $('<div></div>').addClass('comment-info').html(data.objectList[i].replyContent).appendTo($list);
+						}
+					}
+				}
+			})
+		}
+	</script>
+</html>

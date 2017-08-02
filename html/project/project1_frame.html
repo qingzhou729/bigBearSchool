@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<style>
+			.user-pic {
+				border-radius: 50%;
+				margin: 0 auto;
+				margin-top: 10px;
+				width: 80px;
+				height: 80px;
+			}
+			.user-pic img {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+			}
+			.user-name {
+				color: #333;
+				text-align: center;
+				font-size: 15px;
+			}
+			.exam-info {
+				margin-top: 30px;
+			}
+			.exam-info li {
+				width: 75%;
+				margin: 0 auto;
+			}
+			.exam-info li span {
+				font-size: 13px;
+				color: #666;
+				display: inline-block;
+				width: 30%;
+				text-align: left;
+				line-height: 30px;
+			}
+			.exam-info li strong {
+				font-size: 13px;
+				color: #333;
+				display: inline-block;
+				text-align: left;
+				width: 45%;
+				line-height: 30px;
+			}
+			.prompt-msg {
+				font-size: 12px;
+				color: #777;
+				line-height: 18px;
+				padding-top: 15px;
+			}
+			.exam-begin {
+				width: 75%;
+				height: 40px;
+				background: #43CABD;
+				line-height: 40px;
+				text-align: center;
+				font-size: 15px;
+				color: #fff;
+				margin: 0 auto;
+				margin-top: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--<div class="user-pic">
+			<img src="../../image/coach/pic.png" />
+		</div>
+		<p class="user-name">
+			苍耳
+		</p>-->
+		<ul class="exam-info">
+			<li>
+				<span>考试类型</span><strong>小车-C1/C2/C3</strong>
+			</li>
+			<li>
+				<span>考试时间</span><strong>45分钟</strong>
+			</li>
+			<li>
+				<span>合格标准</span><strong>90分</strong>
+			</li>
+			<li>
+				<span>出题规则</span><strong>根据交通局出题规则</strong>
+			</li>
+			<li class="prompt-msg">
+				温馨提示：模拟考试下不能修改答案，每做错1道题扣一分，合格标准为90分。
+			</li>
+		</ul>
+		<div class="exam-begin" onclick="fnOpenProject1TestWin();">
+			开始考试
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		function fnOpenProject1TestWin() {
+			var flashSaleId;
+			api.openWin({
+				name : 'project1_test',
+				url : 'project1_test.html',
+				bounces : false,
+				slidBackEnabled : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		apiready = function() {
+		};
+	</script>
+</html>

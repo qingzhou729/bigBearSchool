@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>setting</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<style>
+			header {
+				background-color: #43CABD;
+			}
+			h1 {
+				height: 50px;
+				line-height: 50px;
+				color: #fff;
+				font-size: 20px;
+				text-align: center;
+				font-weight: 300;
+			}
+			.back {
+				position: absolute;
+				left: 10px;
+				bottom: 0px;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+			}
+			.back i {
+				color: #FFFFFF;
+				font-size: 24px;
+			}
+			.share {
+				position: absolute;
+				right: 0px;
+				bottom: 0px;
+				width: 50px;
+				height: 50px;
+			/*	background: url(../image/header/share.png) center center no-repeat;*/
+				background-size: 24px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="back" tapmode onclick="api.closeWin();">
+				<i class="iconfont">&#xe60d;</i>
+			</div>
+			<h1></h1>
+		</header>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			var newsId = api.pageParam.newsId;
+			var header = $api.dom('header');
+			$api.fixIos7Bar(header);
+			var headerH = $api.offset(header).h;
+			api.openFrame({
+				name : 'news_info_frame',
+				url : 'news_info_frame.html',
+				bounces : true,
+				rect : {
+					x : 0,
+					y : headerH,
+					w : 'auto',
+					h : 'auto'
+				},
+				pageParam : {
+					newsId : newsId
+				}
+			});
+		};
+	</script>
+</html>

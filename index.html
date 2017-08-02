@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>Hello APP</title>
+		<link rel="stylesheet" type="text/css" href="./css/api.css" />
+		<style type="text/css">
+		</style>
+	</head>
+	<body></body>
+	<script type="text/javascript" src="./script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			var welcomeShowed = $api.getStorage('welcomeShowed');
+			var isLogin = $api.getStorage('isLogin');
+			if (welcomeShowed) {
+				if (isLogin == 1) {
+					api.openWin({
+						name : 'main',
+						url : './html/main/main.html',
+						bounces : false,
+						slidBackEnabled : false,
+						pageParam : {
+							key : ''
+						},
+						animation : {
+							type : 'none'
+						}
+					});
+				} else {
+					api.openWin({
+						name : 'login',
+						url : './html/login.html',
+						bounces : false,
+						slidBackEnabled : false,
+						pageParam : {
+							key : ''
+						},
+						animation : {
+							type : 'none'
+						}
+					});
+				}
+			} else {
+				api.openFrameGroup({
+					name : 'welcomeFrames',
+					scrollEnabled : true,
+					rect : {
+						x : 0,
+						y : 0,
+						w : 'auto',
+						h : 'auto'
+					},
+					index : 0,
+					frames : [{
+						name : 'welcome_frame_1',
+						url : './html/welcome_frame_1.html',
+						bgColor : './image/welcome/guide1.png',
+						bounces : false,
+						vScrollBarEnabled : false,
+						hScrollBarEnabled : false
+					}, {
+						name : 'welcome_frame_2',
+						url : './html/welcome_frame_2.html',
+						bgColor : './image/welcome/guide2.png',
+						bounces : false,
+						vScrollBarEnabled : false,
+						hScrollBarEnabled : false
+					}, {
+						name : 'welcome_frame_3',
+						url : './html/welcome_frame_3.html',
+						bgColor : './image/welcome/guide3.png',
+						bounces : false,
+						vScrollBarEnabled : false,
+						hScrollBarEnabled : false
+					}, {
+						name : 'welcome_frame_4',
+						url : './html/welcome_frame_4.html',
+						bgColor : './image/welcome/guide4.png',
+						bounces : false,
+						vScrollBarEnabled : false,
+						hScrollBarEnabled : false
+					}]
+				}, function(ret, err) {
+					var name = ret.name;
+					var index = ret.index;
+				});
+				$api.setStorage('welcomeShowed', '1');
+			}
+		};
+		function fnSetPushListener() {
+			var push = api.require('push');
+			push.setListener(function(ret, err) {
+				if (ret.data) {
+					fnSaveMessagesToDB(ret.data);
+					api.sendEvent({
+						name : 'onMessage'
+					});
+				}
+			});
+		};
+	</script>
+</html>

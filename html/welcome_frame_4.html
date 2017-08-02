@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<style>
+			html, body {
+				height: 100%;
+				background: transparent;
+			}
+			.start {
+				position: absolute;
+				left: 50%;
+				bottom: 44px;
+				width: 124px;
+				height: 44px;
+				background-color: #43CABD;
+				border: solid #43CABD 1px;
+				border-radius: 6px;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+				line-height: 44px;
+				color: #fff;
+				font-size: 16px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="start" tapmode onclick="fnStart();">
+			立即启动
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		var isLogin = $api.getStorage('isLogin');
+		function fnStart() {
+			api.setFrameGroupAttr({
+				name : 'welcomeFrames',
+				hidden : true
+			});
+			if (isLogin == 1) {
+				api.openWin({
+					name : 'main',
+					url : 'main/main.html',
+					bounces : false,
+					slidBackEnabled : false,
+					pageParam : {
+						key : ''
+					},
+					animation : {
+						type : 'none'
+					}
+				});
+			} else {
+				api.openWin({
+					name : 'login',
+					url : 'login.html',
+					bounces : false,
+					slidBackEnabled : false,
+					pageParam : {
+						key : ''
+					},
+					animation : {
+						type : 'none'
+					}
+				});
+			}
+			
+		}
+
+		apiready = function() {
+			var header = $api.dom('header');
+			$api.fixIos7Bar(header);
+		};
+	</script>
+</html>

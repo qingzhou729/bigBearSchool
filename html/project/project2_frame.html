@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			.teach-lists li {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				width: 95%;
+				margin: 0 auto;
+				border-bottom: 1px solid #F0F0F0;
+				height: 95px;
+			}
+			.list-pic {
+				width: 100px;
+				height: 75px;
+				margin: 10px 10px 10px 0;
+			}
+			.video-bg {
+				width: 100px;
+				height: 75px;
+				display: block;
+			}
+			.list-info {
+				width: 50%;
+				margin-top: 10px;
+				height: 75px;
+			}
+			.list-info .list-name {
+				color: #333;
+				font-size: 16px;
+			}
+			.list-info .list-brief {
+				color: #666;
+				font-size: 13px;
+				margin-top: 13px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="teach-lists">
+			<li class="">
+				<div class="list-pic">
+					<img src="../../image/coach/coach.png" class="video-bg"/>
+				</div>
+				<div class="list-info">
+					<p class="list-name">
+						倒车入库
+					</p>
+					<p class="list-brief">
+						整个考场为“凸”字型。
+					</p>
+				</div>
+			</li>
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			var $teachLists = $('.teach-lists');
+			$teachLists.empty();
+			$.ajax({
+				url : IP + '/personalcenter/subVideo.do',
+				dataType : 'json',
+				method : 'post',
+				data : {
+					type : 2
+				},
+				success : function(data) {
+					for (var i = 0; i < data.objectList.length; i++) {
+						var imgUrl = data.objectList[i].imageUrl;
+						var $list = $('<li></li>').addClass('clearfix').prependTo($teachLists);
+						$list.attr("id", data.objectList[i].id);
+						var $listPic = $('<div></div>').addClass('list-pic fl').appendTo($list);
+						var $img = $('<img>').addClass('video-bg').attr('src', imgUrl).appendTo($listPic);
+						var $listInfo = $('<div></div>').addClass('list-info fl').appendTo($list);
+						var $listTitle = $('<p></p>').addClass('list-name').html(data.objectList[i].name).appendTo($listInfo);
+						var $listBrief = $('<p></p>').addClass('list-brief').html(data.objectList[i].introduce).appendTo($listInfo);
+					}
+					$('li').click(function() {
+						var videoId = $(this).attr('id');
+						api.openWin({
+							name : 'study_video',
+							url : '../../html/study_video.html',
+							bounces : false,
+							slidBackEnabled : false,
+							pageParam : {
+								"videoId" : videoId
+							}
+						});
+					})
+				}
+			});
+		};
+	</script>
+</html>

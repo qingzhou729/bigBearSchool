@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+    	html,body { 
+    		height: 100%; background: transparent;}
+    	header {
+    		height: 50px;
+    		position: relative;
+    	}
+    	.skip {
+			position: absolute; bottom: 0px; right: 15px;
+			width: 80px; height: 38px; line-height: 38px;
+			border: solid #eee 1px;
+			border-radius: 38px;
+			color: #999; 
+			font-size: 16px;
+			text-align:center;
+    	}
+    	.skip>span {
+    		text-align:center;
+    	}
+    	
+    </style>
+</head>
+<body>
+    <header>
+    	<div class="skip" tapmode onclick="fnSkip();">
+			<span>跳过</span>
+    	</div>	
+    </header>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    function fnSkip () {
+        api.setFrameGroupAttr({
+            name: 'welcomeFrames',
+            hidden: true
+        });
+        api.openWin({
+            name: 'main',
+            url: 'main/main.html',
+            bounces: false,
+            pageParam: {key : ''},
+            animation: {
+                type: 'none'
+            }
+        });
+    }
+    apiready = function(){
+        var header = $api.dom('header');
+        $api.fixIos7Bar(header);
+    };
+</script>
+</html>

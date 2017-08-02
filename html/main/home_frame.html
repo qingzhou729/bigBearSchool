@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>home frame</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<style>
+			html, body {
+				height: 100%;
+				width: 100%;
+				background-color: rgb(240,240,240);
+			}
+			.public {
+				width: 100%;
+				background: #fff;
+			}
+			.public-title {
+				height: 43px;
+				color: #595c5c;
+				line-height: 43px;
+				font-size: 18px;
+			}
+			.public-title i {
+				color: #595c5c;
+				font-size: 30px;
+				padding: 0 10px;
+			}
+			.public-con-app > li:nth-child(1) {
+				position: relative;
+				height: 90px;
+				background: url(../../image/home/appointment-cocah.png) no-repeat;
+				background-size: 100% 90px;
+			}
+			.public-con-study > li:nth-child(1) {
+				position: relative;
+				height: 90px;
+				background: url(../../image/home/study-1.png) no-repeat;
+				background-size: 100% 90px;
+			}
+			.public-con-study > li:nth-child(2) {
+				position: relative;
+				height: 90px;
+				background: url(../../image/home/study-2.png) no-repeat;
+				background-size: 100% 90px;
+			}
+			.public-con-study > li:nth-child(3) {
+				position: relative;
+				height: 90px;
+				background: url(../../image/home/study-3.png) no-repeat;
+				background-size: 100% 90px;
+			}
+			.public-con-study > li:nth-child(4) {
+				position: relative;
+				height: 90px;
+				background: url(../../image/home/study-4.png) no-repeat;
+				background-size: 100% 90px;
+			}
+			.public-con-app li div, .public-con-study li div {
+				position: absolute;
+				top: 30px;
+				height: 30px;
+				width: 180px;
+				border-radius: 30px;
+				left: 50%;
+				margin-left: -90px;
+				line-height: 30px;
+				font-size: 16px;
+				text-align: center;
+				color: #FFFFFF;
+				background: rgba(0,0,0,.5);
+			}
+			.public-con-app li div i, .public-con-study li div i {
+				position: absolute;
+				right: 10px;
+				color: #FFFFFF;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--预约教练-->
+		<section class="public" id="appointment">
+			<div class="public-title">
+				<i class="iconfont">&#xe60a;</i>预约课程
+			</div>
+			<ul class="public-con-app">
+				<li tapmode onclick="fnOpenCourseWin();">
+					<div>
+						课程大本营 <i class="iconfont">&#xe608;</i>
+					</div>
+				</li>
+			</ul>
+		</section>
+		<!--学车指南-->
+		<section class="public" id="appointment">
+			<div class="public-title">
+				<i class="iconfont">&#xe63b;</i>学车指南
+			</div>
+			<ul class="public-con-study">
+				<li tapmode onclick="fnOpenProject1Win();">
+					<div>
+						科目一题海战术 <i class="iconfont">&#xe608;</i>
+					</div>
+				</li>
+				<li tapmode  onclick="fnOpenProject2Win();">
+					<div>
+						科目二视频教学 <i class="iconfont">&#xe608;</i>
+					</div>
+				</li>
+				<li  tapmode onclick="fnOpenProject3Win();">
+					<div>
+						科目三视频教学 <i class="iconfont">&#xe608;</i>
+					</div>
+				</li>
+				<li tapmode  onclick="fnOpenProject4Win();">
+					<div>
+						科目四轻松拿证 <i class="iconfont">&#xe608;</i>
+					</div>
+				</li>
+			</ul>
+		</section>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		var flashSaleId;
+		function fnOpenCourseWin() {
+			api.openWin({
+				name : 'coach',
+				url : '../../html/course_list.html',
+				bounces : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		function fnOpenProject1Win() {
+			api.openWin({
+				name : 'project1',
+				url : '../../html/project/project1.html',
+				bounces : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		function fnOpenProject2Win() {
+			api.openWin({
+				name : 'project2',
+				url : '../../html/project/project2.html',
+				bounces : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		function fnOpenProject3Win() {
+			api.openWin({
+				name : 'project3',
+				url : '../../html/project/project3.html',
+				bounces : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		function fnOpenProject4Win() {
+			api.openWin({
+				name : 'project4',
+				url : '../../html/project/project4.html',
+				bounces : false,
+				pageParam : {
+					shopId : flashSaleId
+				}
+			});
+		}
+
+		apiready = function() {
+		};
+	</script>
+</html>

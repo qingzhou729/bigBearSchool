@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>setting</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/public.css" />
+		<style>
+			html, body {
+				height: 100%;
+			}
+			body {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-orient: vertical;
+				-webkit-flex-flow: column;
+				flex-flow: column;
+			}
+			header {
+				background-color: #43CABD;
+				width: 100%;
+				/*position: fixed;
+				 top: 0;
+				 z-index: 100;*/
+			}
+			h1 {
+				height: 50px;
+				line-height: 50px;
+				color: #fff;
+				font-size: 20px;
+				text-align: center;
+				font-weight: 300;
+			}
+			.back {
+				position: absolute;
+				left: 10px;
+				bottom: 0px;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+			}
+			.back i {
+				color: #FFFFFF;
+				font-size: 24px;
+			}
+			footer {
+				width: 100%;
+				height: 60px;
+				background-color: rgb(245,245,245);
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				position: fixed;
+				bottom: 0;
+			}
+			footer > section {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				width: 100%;
+				text-align: center;
+				padding: 6px 0 6px 0;
+			}
+			footer > section > .iconfont {
+				font-size: 24px;
+				color: #43CABD;
+			}
+			footer > section > div {
+				font-size: 12px;
+				color: #43CABD;
+			}
+			.questionNum {
+				position: absolute;
+				right: 15px;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="back" tapmode onclick="closeTestWin();">
+				<i class="iconfont">&#xe60d;</i>
+			</div>
+			<h1><i class="iconfont"></i>倒计时 <span id='time'> 45:00</span><a class="questionNum">1/50</a></h1>
+		</header>
+		<footer>
+			<section class="pre"  onclick="assignment();">
+				<i class="iconfont">&#xe693;</i>
+				<div>
+					交卷
+				</div>
+			</section>
+			<section class="next" onclick="nextSubject();">
+				<i class="iconfont">&#xe60e;</i>
+				<div >
+					下一题
+				</div>
+			</section>
+		</footer>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<!--<script  type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			//通知高度兼容
+			var header = $api.dom('header');
+			$api.fixIos7Bar(header);
+			var headerH = $api.offset(header).h;
+			var footer = $api.dom('footer');
+			footerH = $api.offset(footer).h;
+			api.openFrame({
+				name : 'project4_test_frame',
+				url : 'project4_test_frame.html',
+				bounces : true,
+				rect : {
+					x : 0,
+					y : headerH,
+					w : 'auto',
+					h : api.frameHeight - headerH - footerH
+				},
+				pageParam : {
+				}
+			});
+			//倒计时
+			var m = 44;
+			var s = 59;
+			var countDown = setInterval(function() {
+				if (s < 10) {
+					$('#time').html(m + ':0' + s);
+				} else {
+					$('#time').html(m + ':' + s);
+				}
+				s--;
+				if (s < 0) {
+					s = 59;
+					m--;
+				}
+				//时间到了，自动交卷
+				if (m == 0 && s == 0) {
+					clearInterval(countDown);
+					api.alert({
+						title : '提示',
+						msg : '时间到',
+					}, function(ret, err) {
+						api.openWin({
+							name : 'project4_result',
+							url : 'project4_result.html',
+							slidBackEnabled : false,
+							bounces : false,
+							pageParam : {
+							}
+						});
+						store.set('questionNum', 1);
+					});
+				}
+			}, 1000);
+		}
+		function nextSubject() {
+			//			var questionNum4 = store.get('questionNum4');
+			var questionNum4 = $api.getStorage('questionNum4');
+			if (questionNum4 > 50) {
+				api.alert({
+					title : '提示',
+					msg : '你很棒棒哦，全部答完了呢！',
+				}, function(ret, err) {
+					api.openWin({
+						name : 'project14_result',
+						url : 'project14_result.html',
+						slidBackEnabled : false,
+						bounces : false,
+						pageParam : {
+						}
+					});
+					//					store.set('questionNum4', 1);
+					$api.setStorage('questionNum4', 1);
+				});
+			}
+			api.execScript({
+				frameName : 'project4_test_frame',
+				script : 'nextSubject();'
+			});
+			$('.questionNum').html(questionNum4 + '/50');
+			//			alert(store.get('totalScore'))
+		}
+
+		function assignment() {
+			//			var questionNum4 = store.get('questionNum4') - 1 || 0;
+			var questionNum4 = $api.getStorage('questionNum4') - 1 || 0;
+			api.confirm({
+				title : '',
+				msg : '您只回答了' + questionNum4 + '道题，确定要交卷吗？',
+				buttons : ['交卷', '继续答题']
+			}, function(ret, err) {
+				var index = ret.buttonIndex;
+				if (index == 1) {
+					api.openWin({
+						name : 'project4_result',
+						url : 'project4_result.html',
+						slidBackEnabled : false,
+						bounces : false,
+						pageParam : {
+						}
+					});
+					//					store.set('questionNum4', 1);
+					$api.setStorage('questionNum4', 1);
+				}
+			});
+		}
+
+		function closeTestWin() {
+			var questionNum4 = $api.getStorage('questionNum4') - 1 || 0;
+			api.confirm({
+				title : '',
+				msg : '您只回答了' + questionNum4 + '道题，确定要交卷吗？',
+				buttons : ['毅然放弃', '继续答题']
+			}, function(ret, err) {
+				var index = ret.buttonIndex;
+				if (index == 1) {
+					api.closeWin();
+					 $api.setStorage('questionNum4', 1);
+//					store.set('questionNum4', 1);
+				}
+			});
+		}
+	</script>
+</html>

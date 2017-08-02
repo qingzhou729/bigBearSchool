@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			.result img {
+				width: 70%;
+				display: block;
+				margin: 0 auto;
+				margin-top: 100px;
+			}
+			.resultScore {
+				color: #e05400;
+				font-size: 30px;
+				font-weight: bold;
+				display: inline-block;
+				padding: 0 5px;
+			}
+			.bb {
+				font-size: 12px;
+				color: #333;
+			}
+			.resultInfo {
+				text-align: center;
+				font-size: 14px;
+				color: #333;
+				margin-top: 30px;
+				margin-bottom: 30px;
+			}
+			.test-again {
+				width: 80%;
+				height: 44px;
+				background: #43CABD;
+				color: #FFFFFF;
+				line-height: 44px;
+				border-radius: 3px;
+				text-align: center;
+				margin: 0 auto;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="result">
+			<img src='../../image/project/0.png'/>
+			<p class="resultInfo">
+				你的得分是 :<span class="resultScore"></span>分
+			</p>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			//			var scoreMult = store.get('total_Mult') + 0;
+			//			var total_Radio = store.get('total_Radio') + 0;
+			var scoreMult = parseInt($api.getStorage('total_Mult'));
+			var total_Radio = parseInt($api.getStorage('total_Radio'));
+			var totalScore = scoreMult + total_Radio;
+			//			var totalScore = store.get('totalScore4');
+			//			alert(scoreMult+total_Radio);
+			var $resultImg = $('img');
+			if (0 < totalScore < 60) {
+				$resultImg.attr('src', '../../image/project/' + 0 + '.png');
+			} else if (totalScore >= 60 && totalScore < 80) {
+				$resultImg.attr('src', '../../image/project/' + 1 + '.png');
+			} else if (totalScore >= 80 && totalScore < 90) {
+				$resultImg.attr('src', '../../image/project/' + 2 + '.png');
+			} else if (totalScore >= 90 && totalScore <= 100) {
+				$resultImg.attr('src', '../../image/project/' + 3 + '.png');
+			}
+			$('.resultScore').html(totalScore);
+			//			store.set('total_Mult', 0);
+			//			store.set('total_Radio', 0);
+			//			store.set('questionNum4', 1);
+			$api.setStorage('total_Mult', 0);
+			$api.setStorage('total_Radio', 0);
+			$api.setStorage('questionNum4', 1);
+		};
+	</script>
+</html>

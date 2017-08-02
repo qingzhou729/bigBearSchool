@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<style>
+			body, html {
+				background: #F0F0F0;
+				width: 100%;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			ul {
+				width: 100%;
+				background: #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+			li {
+				font-size: 16px;
+				color: #333;
+				width: 94%;
+				height: 50px;
+				line-height: 50px;
+				margin: 0 auto;
+				border-bottom: 1px solid #F0F0F0;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			li:last-child {
+				border-bottom: none;
+			}
+			.outLogin {
+				margin-top: 10px;
+				height: 50px;
+				color: #EC5151;
+				font-size: 16px;
+				line-height: 50px;
+				text-align: center;
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>
+				关于大熊
+			</li>
+			<li>
+				用户协议
+			</li>
+		</ul>
+		<div class="outLogin">
+			退出账号
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			$('.outLogin').click(function() {
+				api.sendEvent({
+					name : 'out_login',
+					extra : {
+						my : "xue"
+					}
+				});
+				$api.setStorage('userTel', '');
+				$api.setStorage('userPwd', '');
+				$api.setStorage('loginUserId', '');
+				$api.setStorage('loginUserImg', '');
+				$api.setStorage('isLogin', '0');
+				api.openWin({
+					name : 'login',
+					url : '../../html/login.html',
+					bounces : false,
+					slidBackEnabled : false,
+					pageParam : {
+						key : ''
+					},
+					animation : {
+						type : 'none'
+					}
+				});
+			})
+		};
+	</script>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			html, body {
+				width: 100%;
+				background: #f0f0f0;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			.cmnity-items li {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+				width: 94%;
+				margin: 0 auto;
+				background: #fff;
+				list-style: none;
+				margin-bottom: 10px;
+				margin-top: 10px;
+			}
+			.com-header {
+				line-height: 50px;
+				position: relative;
+			}
+			.com-header .nickName {
+				font-size: 14px;
+				color: #333;
+			}
+			.com-header img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50%;
+				margin: 10px;
+			}
+			.com-time {
+				color: #aaa;
+				font-size: 10px;
+				position: absolute;
+				right: 10px;
+			}
+			.com-content {
+				line-height: 20px;
+				font-size: 15px;
+				color: #111;
+				padding: 10px;
+			}
+			.com-footer {
+				line-height: 40px;
+				position: relative;
+			}
+			.com-footer > div {
+				width: 49%;
+				text-align: center;
+				display: inline-block;
+				color: #aaa;
+			}
+			.shu {
+				width: 1px;
+				display: inline-block;
+				height: 20px;
+				background: #eee;
+				left: 49%;
+				position: absolute;
+				top: 12px;
+			}
+			.com-footer div span {
+				display: inline-block;
+				padding: 0 10px;
+			}
+			.cm {
+				font-size: 20px;
+				position: relative;
+				top: 4px;
+			}
+			.publish-btn {
+				width: 56px;
+				height: 56px;
+				border-radius: 50%;
+				background: #02bfad;
+				position: fixed;
+				bottom: 50px;
+				right: 30px;
+			}
+			.publish-btn i {
+				color: #FFFFFF;
+				font-size: 30px;
+				text-align: center;
+				line-height: 58px;
+				position: relative;
+				left: 13px;
+			}
+			.imgsContent img {
+				width: 25%;
+				height: 80px;
+				margin: 5px 5px 5px 0px;
+			}
+			.imgsContent img:first-child {
+				margin-left: 10px;
+			}
+			.praiseed {
+				color: #02BFAD;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="cmnity-items">
+			<!--<li>
+			<div class="contain">
+			<div class="com-header">
+			<img src="../../image/coach/pic.png" />
+			<span class="nickName"></span>
+			<span class="com-time"></span>
+			</div>
+			<div class="com-content"></div>
+			<div class="imgsContent">
+			<img src=""/>
+			</div>
+			</div>
+			<div class="com-footer">
+			<div class="comment-btn">
+			<i class="iconfont cm">&#xe601;</i><span class="commentNums">评论</span>
+			</div>
+			<span class="shu"></span>
+			<div class="praise-con">
+			<i class="iconfont pr ">&#xe666;</i><span class="praiseNums">点赞</span>
+			</div>
+			</div>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		var loginUserId = $api.getStorage('loginUserId');
+		//		alert(loginUserId)
+		var isPraise = 1;
+		var pageNum = 1;
+		var dataBox = [];
+		var total;
+		var lock = true;
+		apiready = function() {
+			refreshAllPostList(1);
+			interaction();
+			//			发帖
+			api.addEventListener({
+				name : 'publish_post'
+			}, function(ret) {
+				if (ret && ret.value) {
+					dataBox = [];
+					pageNum = 1;
+					refreshAllPostList(1);
+				}
+			});
+			//			下
+			api.setRefreshHeaderInfo({
+				loadingImg : 'widget://image/refresh.png',
+				bgColor : '#ccc',
+				textColor : '#fff',
+				textDown : '下拉刷新...',
+				textUp : '松开刷新...'
+			}, function(ret, err) {
+				//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+				dataBox = [];
+				pageNum = 1;
+				refreshAllPostList(1);
+				api.refreshHeaderLoading();
+			});
+			api.addEventListener({
+				name : 'scrolltobottom',
+				extra : {
+					threshold : 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+				}
+			}, function(ret, err) {
+				if (!lock) {
+					return;
+				}
+				if (dataBox.length == total) {
+					$('.bottom-push').show();
+					//					Toast('已经加载完毕', 500);
+					return;
+				}
+				pageNum = pageNum + 1;
+				lock = false;
+				refreshAllPostList(pageNum);
+				Toast('加载中', 500);
+				//				api.refreshHeaderLoading();
+			});
+		};
+		function refreshAllPostList(pageNum) {
+			var $cmnityItems = $('.cmnity-items');
+			$cmnityItems.empty();
+			$.ajax({
+				url : IP + '/personalcenter/postList.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					postAuthorId : loginUserId,
+					pageNum : pageNum,
+					numPerPage : 15
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						total = data.total;
+						if (dataBox.length < data.total) {
+							for (var i = 0; i < data.objectList.length; i++) {
+								dataBox.push(data.objectList[i]);
+							}
+						}
+						api.refreshHeaderLoadDone();
+						for (var i = 0; i < dataBox.length; i++) {
+							var $list = $('<li tapmode></li>').appendTo($cmnityItems);
+							var $contain = $('<div ></div>').addClass('contain').appendTo($list);
+							var $comHeader = $('<div></div>').addClass('com-header').appendTo($contain);
+							var $comContent = $('<div onclick =openComInfo(' + dataBox[i].id + ')></div>').addClass('com-content').html(dataBox[i].postContent).appendTo($contain);
+							var $imgsContent = $('<div onclick =openComInfo(' + dataBox[i].id + ')></div>').addClass('imgsContent').appendTo($contain);
+							var $comFooter = $('<div></div>').addClass('com-footer').appendTo($list);
+							var $userImg = $('<img onclick="openUserInfo(' + dataBox[i].postAuthorId + ');"/>').attr('src', dataBox[i].postAuthorUrl).appendTo($comHeader);
+							var $nickName = $('<span></span>').addClass('nickName').html(dataBox[i].postAuthorName).appendTo($comHeader);
+							var $comTime = $('<span></span>').addClass('com-time').html(dataBox[i].postTime).appendTo($comHeader);
+							if (dataBox[i].picList == undefined || dataBox[i].picList == '') {
+								//	$conImgs.html('');
+							} else {
+								for (var j = 0; j < dataBox[i].picList.length; j++) {
+									var $conImgs = $('<img>').attr('src', dataBox[i].picList[j].url).appendTo($imgsContent);
+								}
+							}
+							var $comment = $('<div></div>').addClass('comment-btn').appendTo($comFooter);
+							//							$comment.attr("id", data.objectList[i].id);
+							var $nickName = $('<span></span>').addClass('shu').appendTo($comFooter);
+							var $praise = $('<div></div>').addClass('praise-con').appendTo($comFooter);
+							//							$praise.attr("id", data.objectList[i].id);
+							var $comicon = $('<i></i>').addClass('iconfont cm').html('&#xe601;').appendTo($comment);
+							var $pricon = $('<i></i>').addClass('iconfont pr').html('&#xe666;').appendTo($praise);
+							if (dataBox[i].commentNum > 0) {
+								var $commentNums = $('<span onclick =openComInfo(' + dataBox[i].id + ')></span>').addClass('commentNums').html(dataBox[i].commentNum).appendTo($comment);
+							} else {
+								var $commentNums = $('<span onclick =openComInfo(' + dataBox[i].id + ')></span>').addClass('commentNums').html('评论').appendTo($comment);
+							}
+							var praiseNums = dataBox[i].praiseNum;
+							if (praiseNums > 0) {
+								var $praiseNums = $('<span onclick =praisePost(' + i + ',' + dataBox[i].id + ',' + praiseNums + ')></span>').addClass('praiseNums').html(praiseNums).appendTo($praise);
+							} else {
+								var $praiseNums = $('<span onclick =praisePost(' + i + ',' + dataBox[i].id + ',' + 0 + ')></span>').addClass('praiseNums').html('点赞').appendTo($praise);
+							}
+						}
+						//循环结束
+						lock = true;
+					}
+				}
+			})
+		}
+
+		//交互设计
+		function interaction() {
+			var coachId = api.pageParam.coachId;
+			$('.publish-btn').click(function() {
+				$('.com-win-bg').show();
+			});
+			$('.cancle-btn').click(function() {
+				$('.com-win-bg').hide();
+			});
+			$('.confirm-btn').click(function() {
+				$('.com-win-bg').hide();
+				//refreshPostList();
+			})
+		};
+		//打开其他人信息
+		function openUserInfo(apostAuthorId) {
+			//var postAuthorId = $(this).attr('postAuthorId');
+			var postAuthorId = apostAuthorId;
+			api.openWin({
+				name : 'user_info',
+				url : '../../html/user_info.html',
+				bounces : false,
+				pageParam : {
+					"postAuthorId" : postAuthorId
+				}
+			});
+		}
+
+		//打开评论
+		function openComInfo(acommentId) {
+			var commentId = acommentId;
+			api.openWin({
+				name : 'comment_info',
+				url : '../../html/comment_info.html',
+				bounces : false,
+				pageParam : {
+					"commentId" : commentId
+				}
+			});
+		}
+
+		//点赞
+		function praisePost(i, apostId, apraiseNums) {
+			var praises = $('.cmnity-items .praise-con');
+			var posti = $(praises[i]);
+			postId = apostId;
+			praiseNums = apraiseNums;
+			if (posti.find('.pr').hasClass('praiseed')) {
+				Toast('你已经点过赞了。', 500);
+			} else {
+				posti.find('.pr').addClass('praiseed');
+				$.ajax({
+					url : IP + '/personalcenter/insertPostPraise.do',
+					method : 'post',
+					dataType : 'json',
+					data : {
+						praiseId : loginUserId,
+						postId : postId,
+					},
+					success : function(data) {
+						if (data.flag == 1) {
+							praiseNums++;
+							posti.find('.praiseNums').html(praiseNums);
+						}
+					}
+				})
+			}
+		}
+
+
+		$('.publish-btn').click(function() {
+			api.openWin({
+				name : 'publish_post',
+				url : '../../html/publish_post.html',
+				bounces : false,
+				pageParam : {
+					//"commentId" : commentId
+				}
+			});
+		})
+	</script>
+</html>

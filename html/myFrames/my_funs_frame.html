@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>title</title>
+		<link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<style>
+			body, html {
+				background: #F0F0F0;
+				width: 100%;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			ul {
+				width: 100%;
+				background: #fff;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box; /* Firefox */
+				-webkit-box-sizing: border-box; /* Safari */
+			}
+			li {
+				font-size: 16px;
+				color: #666;
+				position: relative;
+				border-bottom: 1px solid #eee;
+			}
+			.friend-img {
+				display: inline-block;
+				width: 66px;
+				height: 66px;
+				margin: 10px;
+				border-radius: 50%;
+			}
+			.friend-info {
+				padding: 10px 0;
+				width: 50%;
+				height: 66px;
+				position: relative;
+			}
+			.guanzhu {
+				width: 60px;
+				text-align: center;
+				padding-top: 20px;
+				padding-right: 10px;
+			}
+			.guanzhu i {
+				margin: 10px 0;
+				/*color: #DD8400;*/
+				font-size: 24px;
+			}
+			.guanzhu div {
+				font-size: 11px;
+				/*color: #DD8400;*/
+			}
+			.friend-name {
+				font-size: 15px;
+				color: #333;
+				margin-top: 5px;
+				font-weight: 500;
+			}
+			.friend-brief {
+				font-size: 12px;
+				color: #666;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+				position: absolute;
+				bottom: 15px;
+			}
+			.eachFollow {
+				color: #999;
+			}
+			.follow {
+				color: #DD8400;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="friends_list">
+			<!--<li class="clearfix">
+			<img class="friend-img fl" src="../../image/coach/pic.png"/>
+			<div class="friend-info fl">
+			<p class="friend-name">
+			淮左同学
+			</p>
+			<p class="friend-brief">
+			修炼的人生，终究一场空,修炼的人生，终究一场空,修炼的人生，终究一场空
+			</p>
+			</div>
+			<div class="guanzhu fr">
+			<i class="iconfont">&#xe623;</i>
+			<div>
+			取消关注
+			</div>
+			</div>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery-3.1.1.min.js"></script>
+	<!--<script type="text/javascript" src="../../script/store.min.js"></script>-->
+	<script type="text/javascript" src="../../script/public.js"></script>
+	<script type="text/javascript">
+		apiready = function() {
+			refreshMyFunsLists();
+		};
+		function refreshMyFunsLists() {
+			var $friendsList = $('.friends_list');
+			//			var loginUserId = store.get('loginUserId');
+			var loginUserId = $api.getStorage('loginUserId');
+			$friendsList.empty();
+			$.ajax({
+				url : IP + '/homepage/friendList.do',
+				method : 'post',
+				dataType : 'json',
+				data : {
+					friendId : loginUserId,
+				},
+				success : function(data) {
+					if (data.flag == 1) {
+						//					列表
+						for (var i = 0; i < data.objectList.length; i++) {
+							var $list = $('<li tapmode></li>').addClass('clearfix').prependTo($friendsList);
+							$list.attr("userId", data.objectList[i].userId);
+							$list.attr("friendId", data.objectList[i].friendId);
+							var $friendPic = $('<img >').attr('src', data.objectList[i].userUrl).addClass('friend-img fl').appendTo($list);
+							var $friendInfo = $('<div onclick = "openChat( ' + data.objectList[i].userId + ')"></div>').addClass('friend-info fl').appendTo($list);
+							var $guanzhuIcon = $('<div  onclick = "followAfriend(' + data.objectList[i].userId + ',' + data.objectList[i].friendId + ',' + data.objectList[i].flag + ')"></div>').addClass('guanzhu fr').appendTo($list);
+							var $friendName = $('<p></p>').html(data.objectList[i].userName).addClass('friend-name').appendTo($friendInfo);
+							//							var $friendIntro = $('<p></p>').html(data.objectList[i].userName).addClass('friend-name').appendTo($friendInfo);
+							if (data.objectList[i].flag == 1) {
+								var $guanIcon = $('<i></i>').html('&#xe625;').addClass('iconfont eachFollow').appendTo($guanzhuIcon);
+								var $guanDiv = $('<div></div>').addClass('eachFollow').html('已关注').appendTo($guanzhuIcon);
+							} else if (data.objectList[i].flag == 0) {
+								var $guanIcon = $('<i></i>').html('&#xe626;').addClass('iconfont follow').appendTo($guanzhuIcon);
+								var $guanDiv = $('<div></div>').addClass('follow').html('加关注').appendTo($guanzhuIcon);
+							}
+						}
+					}
+				}
+			})
+		}
+
+		function followAfriend(userId, friendId, flag) {
+			if (flag == 1) {
+				Toast('你已经关注过他了，不用再关注啦~', 500);
+			} else {
+				$.ajax({
+					url : IP + '/homepage/insertFriend.do',
+					method : 'post',
+					dataType : 'json',
+					data : {
+						userId : friendId,
+						friendId : userId
+					},
+					success : function(data) {
+						if (data.flag == 1) {
+							refreshMyFunsLists();
+							Toast('关注成功。', 500);
+						}
+					}
+				})
+			}
+		}
+
+		function openChat(friendId) {
+			api.openWin({
+				name : 'chat',
+				url : 'chat.html',
+				bounces : false,
+				pageParam : {
+					friendId : friendId,
+				}
+			});
+		}
+	</script>
+</html>
